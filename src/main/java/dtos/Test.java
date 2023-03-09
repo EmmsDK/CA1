@@ -1,2 +1,4 @@
-package dtos;public class Test {
+package dtos;
+
+public class Test {
 }
