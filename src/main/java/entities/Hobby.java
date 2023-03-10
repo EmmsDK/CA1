@@ -14,10 +14,22 @@ public class Hobby {
     @Column(name = "description", length = 45)
     private String description;
 
+    public Hobby(String name, String description) {
+        this.name = name;
+        this.description = description;
+
+    }
+
+    public Hobby() {
+    }
+
     @ManyToMany
     @JoinTable(name = "person-hobby",
             joinColumns = @JoinColumn(name = "hobby_name"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
+
+
+
     private Set<Person> people = new LinkedHashSet<>();
 
     public Set<Person> getPeople() {

@@ -37,6 +37,16 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "hobby_name"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
 
+    public Person(){
+    }
+
+    public Person(String firstName, String lastName, String email, Address addressStreet) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.addressStreet = addressStreet;
+    }
+
     public Set<Phone> getPhones() {
         return phones;
     }
