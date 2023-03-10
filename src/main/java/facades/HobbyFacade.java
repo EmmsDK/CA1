@@ -82,7 +82,7 @@ public class HobbyFacade implements IDataFacade<Hobby> {
 
     @Override
     public Hobby create(Hobby hobby) throws EntityNotFoundException {
-        Hobby h = new Hobby(hobby.getName(),hobby.getDescription());
+        Hobby h = new Hobby(hobby.getName(),hobby.getWikiLink(), hobby.getCategory(), hobby.getType());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -137,11 +137,11 @@ public class HobbyFacade implements IDataFacade<Hobby> {
 
 
     @Override
-    public Hobby delete(String id) throws EntityNotFoundException {
+    public Hobby delete(String name) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Hobby hobby = em.find(Hobby.class, id);
+        Hobby hobby = em.find(Hobby.class, name);
         if (hobby == null)
-            throw new EntityNotFoundException("Could not remove CityInfo with id: " + id);
+            throw new EntityNotFoundException("Could not remove CityInfo with name: " + name);
         em.getTransaction().begin();
         em.remove(hobby);
         em.getTransaction().commit();

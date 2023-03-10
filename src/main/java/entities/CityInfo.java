@@ -17,13 +17,13 @@ public class CityInfo {
     @OneToMany(mappedBy = "cityinfoZipcode")
     private Set<Address> addresses = new LinkedHashSet<>();
 
+    public CityInfo() {
+    }
+
     public CityInfo(Integer zipCode, String city, Set<Address> addresses) {
         this.zipCode = zipCode;
         this.city = city;
         this.addresses = addresses;
-    }
-
-    public CityInfo() {
     }
 
     public Set<Address> getAddresses() {

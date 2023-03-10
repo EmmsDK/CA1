@@ -11,47 +11,68 @@ public class Hobby {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @Column(name = "description", length = 45)
-    private String description;
+    @Column(name = "wikiLink", nullable = false)
+    private String wikiLink;
 
-    public Hobby(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
+    @Column(name = "category", nullable = false, length = 45)
+    private String category;
+
+    @Column(name = "type", nullable = false, length = 45)
+    private String type;
+
+    @ManyToMany
+    @JoinTable(name = "person-hobby",
+            joinColumns = @JoinColumn(name = "hobby_name", referencedColumnName = "name"),
+            inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
+    private Set<Person> people = new LinkedHashSet<>();
 
     public Hobby() {
     }
 
-    @ManyToMany
-    @JoinTable(name = "person-hobby",
-            joinColumns = @JoinColumn(name = "hobby_name"),
-            inverseJoinColumns = @JoinColumn(name = "person_id"))
-
-
-
-    private Set<Person> people = new LinkedHashSet<>();
+    public Hobby(String name, String wikiLink, String category, String type) {
+        this.name = name;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+    }
 
     public Set<Person> getPeople() {
         return people;
     }
 
-    public void setPeople(Set<Person> persons) {
-        this.people = persons;
+    public void setPeople(Set<Person> people) {
+        this.people = people;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getWikiLink() {
+        return wikiLink;
+    }
+
+    public void setWikiLink(String wikiLink) {
+        this.wikiLink = wikiLink;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String id) {
+        this.name = id;
     }
 }

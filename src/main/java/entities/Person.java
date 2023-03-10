@@ -55,6 +55,14 @@ public class Person {
         this.phones = phones;
     }
 
+    public Set<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(Set<Hobby> hobbies) {
+        this.hobbies = hobbies;
+    }
+
     public Address getAddressStreet() {
         return addressStreet;
     }
