@@ -14,14 +14,28 @@ public class Address {
     @Column(name = "additionalInfo", length = 45)
     private String additionalInfo;
 
-    @OneToMany
-    @JoinTable(name = "person-address", joinColumns = {
-            @JoinColumn(name = "person", referencedColumnName = "id", nullable = false)
-    }, inverseJoinColumns = {
-            @JoinColumn(name = "address", referencedColumnName = "street", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cityInfo_zipCode", nullable = false)
+    private CityInfo cityinfoZipcode;
+
+    @OneToMany(mappedBy = "addressStreet")
+    private Set<Person> people = new LinkedHashSet<>();
+
+    public Set<Person> getPeople() {
+        return people;
     }
-    )
-    public Set<Person> people = new LinkedHashSet<>();
+
+    public void setPeople(Set<Person> people) {
+        this.people = people;
+    }
+
+    public CityInfo getCityinfoZipcode() {
+        return cityinfoZipcode;
+    }
+
+    public void setCityinfoZipcode(CityInfo cityinfoZipcode) {
+        this.cityinfoZipcode = cityinfoZipcode;
+    }
 
     public String getAdditionalInfo() {
         return additionalInfo;

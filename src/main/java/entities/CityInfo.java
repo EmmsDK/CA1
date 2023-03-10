@@ -14,17 +14,16 @@ public class CityInfo {
     @Column(name = "city", nullable = false, length = 90)
     private String city;
 
-    public CityInfo() {
+    @OneToMany(mappedBy = "cityinfoZipcode")
+    private Set<Address> addresses = new LinkedHashSet<>();
+
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
-    @OneToMany
-    @JoinTable(name = "address-cityInfo", joinColumns = {
-            @JoinColumn(name = "address", referencedColumnName = "street", nullable = false)
-    }, inverseJoinColumns = {
-            @JoinColumn(name = "cityInfo", referencedColumnName = "zipCode", nullable = false)
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
     }
-    )
-    public Set<Address> addresses = new LinkedHashSet<>();
 
     public String getCity() {
         return city;

@@ -15,13 +15,18 @@ public class Hobby {
     private String description;
 
     @ManyToMany
-    @JoinTable(name = "person-hobby", joinColumns = {
-            @JoinColumn(name = "person", referencedColumnName = "id", nullable = false)
-    }, inverseJoinColumns = {
-            @JoinColumn(name = "hobby", referencedColumnName = "name", nullable = false)
+    @JoinTable(name = "person-hobby",
+            joinColumns = @JoinColumn(name = "hobby_name"),
+            inverseJoinColumns = @JoinColumn(name = "person_id"))
+    private Set<Person> people = new LinkedHashSet<>();
+
+    public Set<Person> getPeople() {
+        return people;
     }
-    )
-    public Set<Person> people = new LinkedHashSet<>();
+
+    public void setPeople(Set<Person> persons) {
+        this.people = persons;
+    }
 
     public String getDescription() {
         return description;

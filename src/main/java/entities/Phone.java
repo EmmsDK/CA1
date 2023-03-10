@@ -1,9 +1,6 @@
 package entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "phone")
@@ -11,6 +8,11 @@ public class Phone {
     @Id
     @Column(name = "number", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     @Column(name = "description", length = 45)
     private String description;
@@ -21,6 +23,14 @@ public class Phone {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Integer getId() {
