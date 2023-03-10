@@ -64,15 +64,35 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         }
         return p;
     }
+    @Override
+    public Person create(Person person) throws EntityNotFoundException {
+        Person p = new Person(person.getFirstName(),person.getLastName(),person.getEmail(),person.getAddressStreet());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return p;
+    }
     */
 
-
     @Override
-    public CityInfo create(CityInfo ci) {
+    public CityInfo create(CityInfo ci) throws EntityNotFoundException {
+        CityInfo c = new CityInfo(ci.getZipCode(), ci.getCity(), ci.getAddresses());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(ci);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
         return null;
     }
-
-
+    
     public CityInfo getByNumber(int number) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         CityInfo ci = em.find(CityInfo.class, number);
