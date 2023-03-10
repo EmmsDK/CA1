@@ -34,42 +34,38 @@ public class PersonFacade implements IDataFacade<Person> {
         }
         return instance;
     }
+
     //mangler
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 /*
-    public Person create(Person p) {
+    public RenameMeDTO create(RenameMeDTO rm){
+        RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            p.getChildren().forEach(child -> {
-                if (child.getId() != 0)
-                    child = em.find(Child.class, child.getId());
-                else {
-                    child.getToys().forEach(toy -> {
-                        if (toy.getId() != 0)
-                            toy = em.find(Toy.class, toy.getId());
-                        else {
-                            em.persist(toy);
-                        }
-                    });
-                    em.persist(child);
-                }
-            });
-            em.persist(p);
+            em.persist(rme);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new RenameMeDTO(rme);
+    }
+    */
+
+    @Override
+    public Person create(Person person) throws EntityNotFoundException {
+        Person p = new Person(person.getFirstName(),person.getLastName(),person.getEmail(),person.getAddressStreet());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(person);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
         return p;
-    }
-    */
-
-
-    @Override
-    public Person create(Person person) {
-        return null;
     }
 
 
