@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Phone {
     @Id
     @Column(name = "number", nullable = false)
-    private Integer id;
+    private Integer number;
 
     @ManyToOne(fetch = FetchType.LAZY)
 
@@ -33,11 +33,11 @@ public class Phone {
         this.person = person;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

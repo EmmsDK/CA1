@@ -9,7 +9,7 @@ import java.util.Set;
 public class Address {
     @Id
     @Column(name = "street", nullable = false, length = 90)
-    private String id;
+    private String street;
 
     @Column(name = "additionalInfo", length = 45)
     private String additionalInfo;
@@ -45,11 +45,11 @@ public class Address {
         this.additionalInfo = additionalInfo;
     }
 
-    public String getId() {
-        return id;
+    public String getStreet() {
+        return street;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStreet(String street) {
+        this.street = street;
     }
 }

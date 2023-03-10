@@ -9,7 +9,7 @@ import java.util.Set;
 public class CityInfo {
     @Id
     @Column(name = "zipCode", nullable = false)
-    private Integer id;
+    private Integer zipCode;
 
     @Column(name = "city", nullable = false, length = 90)
     private String city;
@@ -33,11 +33,11 @@ public class CityInfo {
         this.city = city;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getZipCode() {
+        return zipCode;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
     }
 }
