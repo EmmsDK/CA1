@@ -9,4 +9,5 @@ public interface IDataFacade<T> {
     List<T> getAll();
     T update(T t) throws EntityNotFoundException;
     T delete(int id) throws EntityNotFoundException;
+    T delete(String id) throws EntityNotFoundException;
 }

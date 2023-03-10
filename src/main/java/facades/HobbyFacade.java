@@ -1,5 +1,6 @@
 package facades;
 
+import entities.CityInfo;
 import entities.Hobby;
 
 import javax.persistence.EntityManager;
@@ -68,57 +69,63 @@ public class HobbyFacade implements IDataFacade<Hobby> {
 
 
     @Override
-    public Hobby create(Hobby Hobby) {
+    public Hobby create(Hobby hobby) {
         return null;
     }
 
 
     public Hobby getByString(String fill) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Hobby p = em.find(Hobby.class, fill);
-        if (p == null)
+        Hobby h = em.find(Hobby.class, fill);
+        if (h == null)
             throw new EntityNotFoundException("The Hobby entity with ID: " + fill + " Was not found");
-        return p;
+        return h;
     }
 
 
-    public Hobby getByNumber(int id) throws EntityNotFoundException {
+    /*public Hobby getByNumber(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         Hobby p = em.find(Hobby.class, id);
         if (p == null)
             throw new EntityNotFoundException("The Hobby entity with ID: " + id + " Was not found");
         return p;
-    }
+    }*/
 
     @Override
     public List<Hobby> getAll() {
         EntityManager em = getEntityManager();
         TypedQuery<Hobby> query = em.createQuery("SELECT p FROM Hobby p", Hobby.class);
-        List<Hobby> Hobbys = query.getResultList();
-        return Hobbys;
+        List<Hobby> hobbies = query.getResultList();
+        return hobbies;
     }
 
     @Override
     public Hobby update(Hobby hobby) throws EntityNotFoundException {
-        if (Hobby.getId() == 0)
+        if (hobby.getName() == null)
             throw new IllegalArgumentException("No Hobby can be updated when id is missing");
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
-        Hobby p = em.merge(hobby);
+        Hobby h = em.merge(hobby);
         em.getTransaction().commit();
-        return p;
+        return h;
     }
 
     @Override
-    public Hobby delete(int id) throws EntityNotFoundException {
+    public Hobby delete(int id) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
+
+    @Override
+    public Hobby delete(String id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Hobby p = em.find(Hobby.class, id);
-        if (p == null)
-            throw new EntityNotFoundException("Could not remove Hobby with id: " + id);
+        Hobby hobby = em.find(Hobby.class, id);
+        if (hobby == null)
+            throw new EntityNotFoundException("Could not remove CityInfo with id: " + id);
         em.getTransaction().begin();
-        em.remove(p);
+        em.remove(hobby);
         em.getTransaction().commit();
-        return p;
+        return hobby;
     }
 
        /* public static void main(String[] args) {

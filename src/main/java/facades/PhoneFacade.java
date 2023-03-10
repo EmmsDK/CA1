@@ -114,6 +114,11 @@ public class PhoneFacade implements IDataFacade<Phone> {
         return p;
     }
 
+    @Override
+    public Phone delete(String id) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
        /* public static void main(String[] args) {
             emf = EMF_Creator.createEntityManagerFactory();
             IDataFacade fe = getPhoneFacade(emf);

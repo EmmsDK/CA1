@@ -121,6 +121,11 @@ public class PersonFacade implements IDataFacade<Person> {
         return p;
     }
 
+    @Override
+    public Person delete(String id) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
        /* public static void main(String[] args) {
             emf = EMF_Creator.createEntityManagerFactory();
             IDataFacade fe = getPersonFacade(emf);
