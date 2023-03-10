@@ -17,7 +17,6 @@ public class Hobby {
     public Hobby(String name, String description) {
         this.name = name;
         this.description = description;
-
     }
 
     public Hobby() {

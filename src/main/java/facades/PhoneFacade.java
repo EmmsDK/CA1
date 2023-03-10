@@ -64,14 +64,34 @@ public class PhoneFacade implements IDataFacade<Phone> {
         }
         return p;
     }
+    @Override
+    public Person create(Person person) throws EntityNotFoundException {
+        Person p = new Person(person.getFirstName(),person.getLastName(),person.getEmail(),person.getAddressStreet());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return p;
+    }
     */
 
-
     @Override
-    public Phone create(Phone phone) {
+    public Phone create(Phone phone) throws EntityNotFoundException{
+        Phone p = new Phone(phone.getNumber(),phone.getPerson(),phone.getDescription());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(phone);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
         return null;
     }
-
 
     public Phone getByInt(int fill) throws EntityNotFoundException {
         EntityManager em = getEntityManager();

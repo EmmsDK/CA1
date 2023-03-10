@@ -65,14 +65,34 @@ public class HobbyFacade implements IDataFacade<Hobby> {
         }
         return p;
     }
+    @Override
+    public Person create(Person person) throws EntityNotFoundException {
+        Person p = new Person(person.getFirstName(),person.getLastName(),person.getEmail(),person.getAddressStreet());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return p;
+    }
     */
 
-
     @Override
-    public Hobby create(Hobby hobby) {
-        return null;
+    public Hobby create(Hobby hobby) throws EntityNotFoundException {
+        Hobby h = new Hobby(hobby.getName(),hobby.getDescription());
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(hobby);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return h;
     }
-
 
     public Hobby getByString(String fill) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
