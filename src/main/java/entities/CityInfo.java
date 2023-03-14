@@ -23,7 +23,6 @@ public class CityInfo {
     public CityInfo(Integer zipCode) {
         this.zipCode = zipCode;
     }
-
     public CityInfo(Integer zipCode, String city) {
         this.zipCode = zipCode;
         this.city = city;

@@ -5,7 +5,6 @@ import entities.CityInfo;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * created by THA
@@ -80,7 +79,6 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
 
     @Override
     public CityInfo create(CityInfo ci) throws EntityNotFoundException {
-        CityInfo c = new CityInfo(ci.getZipCode(), ci.getCity(), ci.getAddresses());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -96,7 +94,7 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         EntityManager em = getEntityManager();
         int zipCode = address.getCityInfo().getZipCode();
         String city = em.find(CityInfo.class, zipCode).getCity();
-        Set<Address> addresses = em.find(CityInfo.class, zipCode).getAddresses();
+        address.setCityInfo(new CityInfo(zipCode, city));
         try {
             em.getTransaction().begin();
             em.persist(address);
@@ -104,7 +102,6 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         } finally {
             em.close();
         }
-        address.setCityInfo(new CityInfo(zipCode, city, addresses));
         return address;
     }
     
