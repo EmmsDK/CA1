@@ -5,7 +5,6 @@ import entities.CityInfo;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 /**
  * created by THA
@@ -96,7 +95,7 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         EntityManager em = getEntityManager();
         int zipCode = address.getCityInfo().getZipCode();
         String city = em.find(CityInfo.class, zipCode).getCity();
-        Set<Address> addresses = em.find(CityInfo.class, zipCode).getAddresses();
+        address.setCityInfo(new CityInfo(zipCode, city));
         try {
             em.getTransaction().begin();
             em.persist(address);
@@ -104,7 +103,6 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         } finally {
             em.close();
         }
-        address.setCityInfo(new CityInfo(zipCode, city, addresses));
         return address;
     }
     
