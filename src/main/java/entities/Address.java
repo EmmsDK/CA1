@@ -1,5 +1,7 @@
 package entities;
 
+import facades.CityInfoFacade;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -16,10 +18,19 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "cityInfo_zipCode", nullable = false)
-    private CityInfo cityinfoZipcode;
+    private CityInfo cityInfo;
 
     @OneToMany(mappedBy = "addressStreet")
     private Set<Person> people = new LinkedHashSet<>();
+
+    public Address() {
+    }
+
+    public Address(String street, String additionalInfo, int zipCode) {
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+        this.cityInfo = new CityInfo(zipCode);
+    }
 
     public Set<Person> getPeople() {
         return people;
@@ -29,12 +40,12 @@ public class Address {
         this.people = people;
     }
 
-    public CityInfo getCityinfoZipcode() {
-        return cityinfoZipcode;
+    public CityInfo getCityInfo() {
+        return cityInfo;
     }
 
-    public void setCityinfoZipcode(CityInfo cityinfoZipcode) {
-        this.cityinfoZipcode = cityinfoZipcode;
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
     }
 
     public String getAdditionalInfo() {

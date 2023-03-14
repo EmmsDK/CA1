@@ -14,10 +14,19 @@ public class CityInfo {
     @Column(name = "city", nullable = false, length = 90)
     private String city;
 
-    @OneToMany(mappedBy = "cityinfoZipcode")
+    @OneToMany(mappedBy = "cityInfo")
     private Set<Address> addresses = new LinkedHashSet<>();
 
     public CityInfo() {
+    }
+
+    public CityInfo(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public CityInfo(Integer zipCode, String city) {
+        this.zipCode = zipCode;
+        this.city = city;
     }
 
     public CityInfo(Integer zipCode, String city, Set<Address> addresses) {

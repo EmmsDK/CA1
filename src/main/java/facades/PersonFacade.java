@@ -56,7 +56,6 @@ public class PersonFacade implements IDataFacade<Person> {
 
     @Override
     public Person create(Person person) throws EntityNotFoundException {
-        Person p = new Person(person.getFirstName(),person.getLastName(),person.getEmail(),person.getAddressStreet());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -65,7 +64,7 @@ public class PersonFacade implements IDataFacade<Person> {
         } finally {
             em.close();
         }
-        return p;
+        return person;
     }
 
 

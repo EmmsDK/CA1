@@ -1,17 +1,19 @@
 package dtos;
 
+import facades.CityInfoFacade;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class AddressDTO implements Serializable {
     private final String street;
     private final String additionalInfo;
-    private final CityInfoDTO cityinfoZipcode;
+    private final CityInfoDTO cityInfoDTO;
 
-    public AddressDTO(String street, String additionalInfo, CityInfoDTO cityinfoZipcode) {
+    public AddressDTO(String street, String additionalInfo, CityInfoDTO cityInfoDTO) {
         this.street = street;
         this.additionalInfo = additionalInfo;
-        this.cityinfoZipcode = cityinfoZipcode;
+        this.cityInfoDTO = cityInfoDTO;
     }
 
     public String getStreet() {
@@ -22,8 +24,8 @@ public class AddressDTO implements Serializable {
         return additionalInfo;
     }
 
-    public CityInfoDTO getCityinfoZipcode() {
-        return cityinfoZipcode;
+    public CityInfoDTO getCityInfoDTO() {
+        return cityInfoDTO;
     }
 
     @Override
@@ -33,12 +35,12 @@ public class AddressDTO implements Serializable {
         AddressDTO entity = (AddressDTO) o;
         return Objects.equals(this.street, entity.street) &&
                 Objects.equals(this.additionalInfo, entity.additionalInfo) &&
-                Objects.equals(this.cityinfoZipcode, entity.cityinfoZipcode);
+                Objects.equals(this.cityInfoDTO, entity.cityInfoDTO);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(street, additionalInfo, cityinfoZipcode);
+        return Objects.hash(street, additionalInfo, cityInfoDTO);
     }
 
     @Override
@@ -46,6 +48,6 @@ public class AddressDTO implements Serializable {
         return getClass().getSimpleName() + "(" +
                 "id = " + street + ", " +
                 "additionalInfo = " + additionalInfo + ", " +
-                "cityinfoZipcode = " + cityinfoZipcode + ")";
+                "cityinfoZipcode = " + cityInfoDTO + ")";
     }
 }

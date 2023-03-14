@@ -1,12 +1,11 @@
 package facades;
 
+import entities.Address;
 import entities.CityInfo;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * created by THA
@@ -92,15 +91,30 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         }
         return null;
     }
-    
-    public CityInfo getByNumber(int number) throws EntityNotFoundException {
+
+    public Address createAddress(Address address) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        CityInfo ci = em.find(CityInfo.class, number);
+        int zipCode = address.getCityInfo().getZipCode();
+        String city = em.find(CityInfo.class, zipCode).getCity();
+        Set<Address> addresses = em.find(CityInfo.class, zipCode).getAddresses();
+        try {
+            em.getTransaction().begin();
+            em.persist(address);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        address.setCityInfo(new CityInfo(zipCode, city, addresses));
+        return address;
+    }
+    
+    public CityInfo getByZipCode(int zipCode) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        CityInfo ci = em.find(CityInfo.class, zipCode);
         if (ci == null)
-            throw new EntityNotFoundException("The CityInfo entity with ID: " + number + " Was not found");
+            throw new EntityNotFoundException("The CityInfo entity with zipCode: " + zipCode + " Was not found");
         return ci;
     }
-
 
 
 
