@@ -17,9 +17,9 @@ public class Phone {
     @Column(name = "description", length = 45)
     private String description;
 
-    public Phone(Integer number, Person person, String description) {
+    public Phone(Integer number, String description) {
         this.number = number;
-        this.person = person;
+
         this.description = description;
     }
 

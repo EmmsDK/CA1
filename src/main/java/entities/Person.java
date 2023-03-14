@@ -39,7 +39,7 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "hobby_name"))
     private List<Hobby> hobbies;
 
-    public Person(){
+    public Person() {
     }
 
     public Person(String firstName, String lastName, String email, Address addressStreet) {
@@ -58,11 +58,11 @@ public class Person {
         this.phones = phones;
     }
 
-    public Address getAddressStreet() {
+    public Address getAddress() {
         return addressStreet;
     }
 
-    public void setAddressStreet(Address addressStreet) {
+    public void setAddress(Address addressStreet) {
         this.addressStreet = addressStreet;
     }
 
@@ -98,9 +98,28 @@ public class Person {
         this.id = id;
     }
 
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
+    }
+
     public void addPhone(Phone phone) {
         this.phones.add(phone);
         phone.setPerson(this); //Child gets a parent when parent gets the child
     }
+
+    public void addHobby(Hobby hobby) {
+        for (Hobby h : hobbies) {
+            if (h.getName().equals(hobby.getName())) {
+                return;
+            }
+        }
+        this.hobbies.add(hobby);
+        hobby.setPeople(hobby.getPeople()); //Child gets a parent when parent gets the child
+    }
+
 }
 

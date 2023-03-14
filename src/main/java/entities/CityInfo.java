@@ -1,7 +1,9 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,22 +17,22 @@ public class CityInfo {
     private String city;
 
     @OneToMany(mappedBy = "cityinfoZipcode")
-    private Set<Address> addresses = new LinkedHashSet<>();
+    private List<Address> addresses;
 
-    public CityInfo(Integer zipCode, String city, Set<Address> addresses) {
+    public CityInfo(Integer zipCode, String city) {
         this.zipCode = zipCode;
         this.city = city;
-        this.addresses = addresses;
+        this.addresses = new ArrayList<>();
     }
 
     public CityInfo() {
     }
 
-    public Set<Address> getAddresses() {
+    public List<Address> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(Set<Address> addresses) {
+    public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
     }
 
@@ -48,5 +50,9 @@ public class CityInfo {
 
     public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
+    }
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+        address.setCityinfoZipcode(this); //Child gets a parent when parent gets the child
     }
 }
