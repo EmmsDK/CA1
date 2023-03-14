@@ -1,7 +1,9 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,13 +31,13 @@ public class Person {
     private Address addressStreet;
 
     @OneToMany(mappedBy = "person")
-    private Set<Phone> phones = new LinkedHashSet<>();
+    private List<Phone> phones;
 
     @ManyToMany
     @JoinTable(name = "person-hobby",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "hobby_name"))
-    private Set<Hobby> hobbies = new LinkedHashSet<>();
+    private List<Hobby> hobbies;
 
     public Person(){
     }
@@ -44,14 +46,15 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.addressStreet = addressStreet;
+        this.hobbies = new ArrayList<>();
+        this.phones = new ArrayList<>();
     }
 
-    public Set<Phone> getPhones() {
+    public List<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(Set<Phone> phones) {
+    public void setPhones(List<Phone> phones) {
         this.phones = phones;
     }
 
@@ -94,4 +97,10 @@ public class Person {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public void addPhone(Phone phone) {
+        this.phones.add(phone);
+        phone.setPerson(this); //Child gets a parent when parent gets the child
+    }
 }
+
