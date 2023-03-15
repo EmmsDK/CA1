@@ -65,7 +65,9 @@ public class CityInfoFacadeTest {
     @Test
     void createAddress() {
         EntityManager em = emf.createEntityManager();
+        CityInfo ci = em.find(CityInfo.class, 1234);
         Address a = new Address("Testvej", "69");
+        a.setCityInfo(ci);
         System.out.println(facade.createAddress(a));
         System.out.println(a.getStreet());
         assertEquals("Testvej", em.find(Address.class, a.getStreet()).getStreet());
@@ -99,6 +101,14 @@ public class CityInfoFacadeTest {
         facade.update(ci);
         assertEquals("TæstCity", facade.getByZipCode(1234).getCity());
         System.out.println(facade.getByZipCode(1234).getCity());
+        try {
+            assertEquals("No CityInfo can be updated when id is missing", facade.update(new CityInfo(0000, "TestCity")));
+            Assert.fail("Should have thrown an exception");
+        }
+        catch (Exception e) {
+            String expectedMessage = "No CityInfo can be updated when id is missing";
+            Assert.assertEquals( "Exception message must be correct", expectedMessage, e.getMessage() );
+        }
     }
 
     @Test

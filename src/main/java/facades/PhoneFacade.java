@@ -81,7 +81,6 @@ public class PhoneFacade implements IDataFacade<Phone> {
 
     @Override
     public Phone create(Phone phone) throws EntityNotFoundException{
-        Phone p = new Phone(phone.getNumber(),phone.getPerson(),phone.getDescription());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();

@@ -1,5 +1,5 @@
 package dtos;
-
+/*
 import entities.Phone;
 
 import java.io.Serializable;
@@ -51,3 +51,5 @@ public class PhoneDTO implements Serializable {
                 "description = " + description + ")";
     }
 }
+
+ */
