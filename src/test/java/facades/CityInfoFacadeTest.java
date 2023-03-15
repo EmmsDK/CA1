@@ -52,7 +52,7 @@ public class CityInfoFacadeTest {
 
     @Test
     void getCityInfoFacade() {
-
+        assertEquals(true, facade instanceof CityInfoFacade);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class CityInfoFacadeTest {
         CityInfo ci = em.find(CityInfo.class, 1234);
         Address a = new Address("Testvej", "69");
         a.setCityInfo(ci);
-        System.out.println(facade.createAddress(a));
+        System.out.println(facade.createAddress(a).getStreet());
         System.out.println(a.getStreet());
         assertEquals("Testvej", em.find(Address.class, a.getStreet()).getStreet());
     }
@@ -113,14 +113,27 @@ public class CityInfoFacadeTest {
 
     @Test
     void delete() {
-        CityInfo ci = facade.getByZipCode(1234);
-        facade.delete(ci.getZipCode());
+        System.out.println(facade.delete(1234));
         try {
             assertEquals("Could not remove CityInfo with id: " + 1234, facade.delete(1234));
             Assert.fail("Should have thrown an exception");
         }
         catch (Exception e) {
             String expectedMessage = "Could not remove CityInfo with id: 1234";
+            Assert.assertEquals( "Exception message must be correct", expectedMessage, e.getMessage() );
+        }
+
+
+    }
+    @Test
+    void delete2(){
+        System.out.println(facade.delete("TestCity").getZipCode());
+        try {
+            assertEquals("Could not remove CityInfo with cityname: TestCity", facade.delete("TestCity"));
+            Assert.fail("Should have thrown an exception");
+        }
+        catch (Exception e) {
+            String expectedMessage = "Could not remove CityInfo with cityname: TestCity";
             Assert.assertEquals( "Exception message must be correct", expectedMessage, e.getMessage() );
         }
     }

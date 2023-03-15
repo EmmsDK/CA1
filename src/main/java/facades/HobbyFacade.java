@@ -82,7 +82,6 @@ public class HobbyFacade implements IDataFacade<Hobby> {
 
     @Override
     public Hobby create(Hobby hobby) throws EntityNotFoundException {
-        Hobby h = new Hobby(hobby.getName(),hobby.getWikiLink(), hobby.getCategory(), hobby.getType());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -91,7 +90,7 @@ public class HobbyFacade implements IDataFacade<Hobby> {
         } finally {
             em.close();
         }
-        return h;
+        return hobby;
     }
 
     public Hobby getByString(String fill) throws EntityNotFoundException {
