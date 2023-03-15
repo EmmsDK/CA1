@@ -66,8 +66,13 @@ public class Address {
     public void setStreet(String street) {
         this.street = street;
     }
+
     public void addPerson(Person person) {
+
+
         this.people.add(person);
+
+
         person.setAddress(this); //Child gets a parent when parent gets the child
     }
 

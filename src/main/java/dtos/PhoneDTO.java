@@ -37,7 +37,7 @@ public class PhoneDTO implements Serializable {
     }
 
     public Phone getEntity(){
-        Phone p = new Phone(this.number, Person person, this.description);
+        Phone p = new Phone(this.number, this.description);
         if(number != 0)
             p.setId(this.id);
         this.children.forEach(child->p.addChild(child.getEntity()));
