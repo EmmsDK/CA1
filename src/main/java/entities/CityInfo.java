@@ -16,7 +16,7 @@ public class CityInfo {
     @Column(name = "city", nullable = false, length = 90)
     private String city;
 
-    @OneToMany(mappedBy = "cityInfo")
+    @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
     private List<Address> addresses;
 
     public CityInfo(Integer zipCode, String city) {

@@ -1,5 +1,6 @@
 package facades;
 
+import entities.CityInfo;
 import entities.Person;
 
 import javax.persistence.EntityManager;
@@ -59,7 +60,7 @@ public class PersonFacade implements IDataFacade<Person> {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(person);
+            em.merge(person);
             em.getTransaction().commit();
         } finally {
             em.close();

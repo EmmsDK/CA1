@@ -26,14 +26,14 @@ public class Person {
     @Column(name = "lastName", nullable = false, length = 45)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "address_street", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_street", nullable = false, referencedColumnName = "street")
     private Address addressStreet;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Phone> phones;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "person-hobby",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "hobby_name"))
@@ -42,7 +42,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(String firstName, String lastName, String email, Address addressStreet) {
+    public Person(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -121,5 +121,13 @@ public class Person {
         hobby.setPeople(hobby.getPeople()); //Child gets a parent when parent gets the child
     }
 
+    @Override
+    public String toString() {
+        return "Person (ID): "+ id +
+                "\nFirst name: " + firstName +
+                "\nLast name: " + lastName +
+                "\nEmail: " + email +
+                "\nAddress: " + addressStreet;
+    }
 }
 
