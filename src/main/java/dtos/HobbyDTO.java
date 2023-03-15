@@ -4,7 +4,9 @@ import entities.Hobby;
 import entities.Phone;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class HobbyDTO implements Serializable {
     private String name;
@@ -23,6 +25,10 @@ public class HobbyDTO implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    public static List<HobbyDTO> toList(List<Hobby> hobbies) {
+        return hobbies.stream().map(HobbyDTO::new).collect(Collectors.toList());
+    }
+
 
     public String getName() {
         return name;

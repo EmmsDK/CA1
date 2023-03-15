@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PersonDTO implements Serializable {
     private  Integer id;
@@ -62,6 +63,10 @@ public class PersonDTO implements Serializable {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    public static List<PersonDTO> toList(List<Person> people) {
+        return people.stream().map(PersonDTO::new).collect(Collectors.toList());
     }
 
 

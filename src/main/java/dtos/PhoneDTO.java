@@ -3,7 +3,9 @@ package dtos;
 import entities.Phone;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PhoneDTO implements Serializable {
     private  Integer number;
@@ -36,6 +38,10 @@ public class PhoneDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(number, description);
+    }
+
+    public static List<PhoneDTO> toList(List<Phone> phones) {
+        return phones.stream().map(PhoneDTO::new).collect(Collectors.toList());
     }
 
     public Phone getEntity(){
