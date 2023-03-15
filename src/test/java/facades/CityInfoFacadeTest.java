@@ -65,7 +65,7 @@ public class CityInfoFacadeTest {
     @Test
     void createAddress() {
         EntityManager em = emf.createEntityManager();
-        Address a = new Address("Testvej", "69", 2900);
+        Address a = new Address("Testvej", "69");
         System.out.println(facade.createAddress(a));
         System.out.println(a.getStreet());
         assertEquals("Testvej", em.find(Address.class, a.getStreet()).getStreet());

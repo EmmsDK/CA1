@@ -26,7 +26,7 @@ public class Hobby {
     @JoinTable(name = "person-hobby",
             joinColumns = @JoinColumn(name = "hobby_name", referencedColumnName = "name"),
             inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
-    private Set<Person> people = new LinkedHashSet<>();
+    private List<Person> people = new ArrayList<>();
 
     public Hobby() {
     }
