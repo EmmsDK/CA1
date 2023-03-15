@@ -56,6 +56,8 @@ public class PersonDTO implements Serializable {
         Person p = new Person(this.email, this.firstName, this.lastName);
         if(id != 0)
             p.setId(this.id);
+        this.phones.forEach(phone->p.addPhone(phone.getEntity()));
+        this.hobbies.forEach(hobby->p.addHobby(hobby.getEntity()));
         return p;
     }
 

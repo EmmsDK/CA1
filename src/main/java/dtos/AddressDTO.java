@@ -29,6 +29,13 @@ public class AddressDTO implements Serializable {
     }
 
 
+    public Address getEntity() {
+       Address address = new Address(this.street, this.additionalInfo);
+        if (street !=null)
+            address.setStreet(this.street);
+            this.people.forEach(person->address.addPerson(person.getEntity()));
+        return address;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -2,6 +2,7 @@ package dtos;
 
 import entities.Address;
 import entities.CityInfo;
+import entities.Person;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,6 +29,14 @@ public class CityInfoDTO implements Serializable {
 
     public String getCity() {
         return city;
+    }
+
+    public CityInfo getEntity() {
+        CityInfo ci = new CityInfo(this.zipCode, this.city);
+        if (zipCode != 0)
+            ci.setZipCode(this.zipCode);
+        this.addresses.forEach(address->ci.addAddress(address.getEntity()));
+        return ci;
     }
 
     @Override
