@@ -97,7 +97,7 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         address.setCityInfo(new CityInfo(zipCode, city));
         try {
             em.getTransaction().begin();
-            em.persist(address);
+            em.merge(address);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -147,8 +147,19 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
     }
 
     @Override
-    public CityInfo delete(String id) throws errorhandling.EntityNotFoundException {
-        return null;
+    public CityInfo delete(String city) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        TypedQuery<CityInfo> cityInfoTypedQuery = em.createQuery("SELECT c FROM CityInfo c WHERE c.city = :city", CityInfo.class);
+        try {
+            CityInfo ci = cityInfoTypedQuery.setParameter("city", city).getSingleResult();
+            em.getTransaction().begin();
+            em.remove(ci);
+            em.getTransaction().commit();
+            return ci;
+        } catch (NoResultException e) {
+            throw new EntityNotFoundException("Could not remove CityInfo with cityname: " + city);
+        }
+
     }
 
        /* public static void main(String[] args) {

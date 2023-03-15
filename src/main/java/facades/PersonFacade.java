@@ -1,5 +1,6 @@
 package facades;
 
+import entities.CityInfo;
 import entities.Person;
 
 import javax.persistence.EntityManager;
@@ -59,7 +60,7 @@ public class PersonFacade implements IDataFacade<Person> {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(person);
+            person = em.merge(person);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -68,7 +69,7 @@ public class PersonFacade implements IDataFacade<Person> {
     }
 
 
-    public Person getByPrimeKey(int id) throws EntityNotFoundException {
+    public Person getById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         Person p = em.find(Person.class, id);
         if (p == null)
@@ -76,14 +77,6 @@ public class PersonFacade implements IDataFacade<Person> {
         return p;
     }
 
-
-    public Person getByNumber(int id) throws EntityNotFoundException {
-        EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, id);
-        if (p == null)
-            throw new EntityNotFoundException("The Person entity with ID: " + id + " Was not found");
-        return p;
-    }
 
     @Override
     public List<Person> getAll() {

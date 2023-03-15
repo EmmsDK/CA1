@@ -16,7 +16,7 @@ public class CityInfo {
     @Column(name = "city", nullable = false, length = 90)
     private String city;
 
-    @OneToMany(mappedBy = "cityInfo")
+    @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
     private List<Address> addresses;
 
     public CityInfo(Integer zipCode, String city) {
@@ -54,5 +54,10 @@ public class CityInfo {
     public void addAddress(Address address) {
         this.addresses.add(address);
         address.setCityInfo(this); //Child gets a parent when parent gets the child
+    }
+
+    @Override
+    public String toString() {
+        return "City: " + city + ", " + zipCode;
     }
 }

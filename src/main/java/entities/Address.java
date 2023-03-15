@@ -18,11 +18,11 @@ public class Address {
     @Column(name = "additionalInfo", length = 45)
     private String additionalInfo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "cityInfo_zipCode", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "cityInfo_zipCode", nullable = false, referencedColumnName = "zipCode")
     private CityInfo cityInfo;
 
-    @OneToMany(mappedBy = "addressStreet")
+    @OneToMany(mappedBy = "addressStreet", cascade = CascadeType.ALL)
     private List<Person> people;
 
     public Address(){
@@ -71,4 +71,8 @@ public class Address {
         person.setAddress(this); //Child gets a parent when parent gets the child
     }
 
+    @Override
+    public String toString() {
+        return  street + " " + additionalInfo + ", " + cityInfo.getZipCode() + " " + cityInfo.getCity();
+    }
 }
