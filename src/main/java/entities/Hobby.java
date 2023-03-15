@@ -1,7 +1,9 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,14 +36,17 @@ public class Hobby {
         this.wikiLink = wikiLink;
         this.category = category;
         this.type = type;
+        this.people=new ArrayList<>();
     }
 
-    public Set<Person> getPeople() {
+
+
+    public List<Person> getPeople() {
         return people;
     }
 
-    public void setPeople(Set<Person> people) {
-        this.people = people;
+    public void setPeople(List<Person> persons) {
+        this.people = persons;
     }
 
     public String getType() {
@@ -74,5 +79,15 @@ public class Hobby {
 
     public void setName(String id) {
         this.name = id;
+    }
+
+    public void addPerson(Person person) {
+        for (Person p : people) {
+            if (p.getId()==person.getId()) {
+                return;
+            }
+        }
+        this.people.add(person);
+        person.setHobbies(person.getHobbies()); //Child gets a parent when parent gets the child
     }
 }

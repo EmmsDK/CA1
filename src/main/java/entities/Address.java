@@ -3,7 +3,9 @@ package entities;
 import facades.CityInfoFacade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,22 +23,23 @@ public class Address {
     private CityInfo cityInfo;
 
     @OneToMany(mappedBy = "addressStreet")
-    private Set<Person> people = new LinkedHashSet<>();
+    private List<Person> people;
 
-    public Address() {
+    public Address(){
+
     }
 
-    public Address(String street, String additionalInfo, int zipCode) {
+    public Address(String street, String additionalInfo) {
         this.street = street;
         this.additionalInfo = additionalInfo;
-        this.cityInfo = new CityInfo(zipCode);
+        this.people = new ArrayList<>();
     }
 
-    public Set<Person> getPeople() {
+    public List<Person> getPeople() {
         return people;
     }
 
-    public void setPeople(Set<Person> people) {
+    public void setPeople(List<Person> people) {
         this.people = people;
     }
 
@@ -63,4 +66,9 @@ public class Address {
     public void setStreet(String street) {
         this.street = street;
     }
+    public void addPerson(Person person) {
+        this.people.add(person);
+        person.setAddress(this); //Child gets a parent when parent gets the child
+    }
+
 }

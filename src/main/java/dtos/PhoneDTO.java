@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Phone;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -32,6 +34,14 @@ public class PhoneDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(number, description);
+    }
+
+    public Phone getEntity(){
+        Phone p = new Phone(this.number, Person person, this.description);
+        if(number != 0)
+            p.setId(this.id);
+        this.children.forEach(child->p.addChild(child.getEntity()));
+        return p;
     }
 
     @Override
