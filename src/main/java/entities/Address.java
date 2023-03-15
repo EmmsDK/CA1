@@ -1,7 +1,11 @@
 package entities;
 
+import facades.CityInfoFacade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,25 +20,35 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "cityInfo_zipCode", nullable = false)
-    private CityInfo cityinfoZipcode;
+    private CityInfo cityInfo;
 
     @OneToMany(mappedBy = "addressStreet")
-    private Set<Person> people = new LinkedHashSet<>();
+    private List<Person> people;
 
-    public Set<Person> getPeople() {
+    public Address(){
+
+    }
+
+    public Address(String street, String additionalInfo) {
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+        this.people = new ArrayList<>();
+    }
+
+    public List<Person> getPeople() {
         return people;
     }
 
-    public void setPeople(Set<Person> people) {
+    public void setPeople(List<Person> people) {
         this.people = people;
     }
 
-    public CityInfo getCityinfoZipcode() {
-        return cityinfoZipcode;
+    public CityInfo getCityInfo() {
+        return cityInfo;
     }
 
-    public void setCityinfoZipcode(CityInfo cityinfoZipcode) {
-        this.cityinfoZipcode = cityinfoZipcode;
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
     }
 
     public String getAdditionalInfo() {
@@ -52,4 +66,9 @@ public class Address {
     public void setStreet(String street) {
         this.street = street;
     }
+    public void addPerson(Person person) {
+        this.people.add(person);
+        person.setAddress(this); //Child gets a parent when parent gets the child
+    }
+
 }

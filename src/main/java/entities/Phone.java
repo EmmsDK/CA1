@@ -17,6 +17,15 @@ public class Phone {
     @Column(name = "description", length = 45)
     private String description;
 
+    public Phone(Integer number, String description) {
+        this.number = number;
+
+        this.description = description;
+    }
+
+    public Phone() {
+    }
+
     public String getDescription() {
         return description;
     }

@@ -1,7 +1,9 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,27 +31,38 @@ public class Person {
     private Address addressStreet;
 
     @OneToMany(mappedBy = "person")
-    private Set<Phone> phones = new LinkedHashSet<>();
+    private List<Phone> phones;
 
     @ManyToMany
     @JoinTable(name = "person-hobby",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "hobby_name"))
-    private Set<Hobby> hobbies = new LinkedHashSet<>();
+    private List<Hobby> hobbies;
 
-    public Set<Phone> getPhones() {
+    public Person() {
+    }
+
+    public Person(String firstName, String lastName, String email, Address addressStreet) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.hobbies = new ArrayList<>();
+        this.phones = new ArrayList<>();
+    }
+
+    public List<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(Set<Phone> phones) {
+    public void setPhones(List<Phone> phones) {
         this.phones = phones;
     }
 
-    public Address getAddressStreet() {
+    public Address getAddress() {
         return addressStreet;
     }
 
-    public void setAddressStreet(Address addressStreet) {
+    public void setAddress(Address addressStreet) {
         this.addressStreet = addressStreet;
     }
 
@@ -84,4 +97,29 @@ public class Person {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public void addPhone(Phone phone) {
+        this.phones.add(phone);
+        phone.setPerson(this); //Child gets a parent when parent gets the child
+    }
+
+    public void addHobby(Hobby hobby) {
+        for (Hobby h : hobbies) {
+            if (h.getName().equals(hobby.getName())) {
+                return;
+            }
+        }
+        this.hobbies.add(hobby);
+        hobby.setPeople(hobby.getPeople()); //Child gets a parent when parent gets the child
+    }
+
 }
+

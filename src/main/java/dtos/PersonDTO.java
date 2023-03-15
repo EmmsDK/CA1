@@ -1,5 +1,5 @@
 package dtos;
-
+/*
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -74,3 +74,4 @@ public class PersonDTO implements Serializable {
                 "hobbies = " + hobbies + ")";
     }
 }
+*/

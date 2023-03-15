@@ -4,8 +4,10 @@ import errorhandling.EntityNotFoundException;
 
 public interface IDataFacade<T> {
     T create(T t);
-    T getById(int id) throws EntityNotFoundException;
+    //T getByString(String fill) throws EntityNotFoundException;
+    //T getByInt(int fill) throws EntityNotFoundException;
     List<T> getAll();
     T update(T t) throws EntityNotFoundException;
     T delete(int id) throws EntityNotFoundException;
+    T delete(String id) throws EntityNotFoundException;
 }

@@ -1,6 +1,6 @@
 package facades;
 
-import entities.Person;
+import entities.Phone;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,13 +13,13 @@ import java.util.List;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-public class PersonFacade implements IDataFacade<Person> {
+public class PhoneFacade implements IDataFacade<Phone> {
 
-    private static PersonFacade instance;
+    private static PhoneFacade instance;
     private static EntityManagerFactory emf;
 
     //Private Constructor to ensure Singleton
-    private PersonFacade() {
+    private PhoneFacade() {
     }
 
 
@@ -27,35 +27,46 @@ public class PersonFacade implements IDataFacade<Person> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<Person> getPersonFacade(EntityManagerFactory _emf) {
+    public static IDataFacade<Phone> getPhoneFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new PersonFacade();
+            instance = new PhoneFacade();
         }
         return instance;
     }
-
     //mangler
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 /*
-    public RenameMeDTO create(RenameMeDTO rm){
-        RenameMe rme = new RenameMe(rm.getDummyStr1(), rm.getDummyStr2());
+    public Phone create(Phone p) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(rme);
+            p.getChildren().forEach(child -> {
+                if (child.getId() != 0)
+                    child = em.find(Child.class, child.getId());
+                else {
+                    child.getToys().forEach(toy -> {
+                        if (toy.getId() != 0)
+                            toy = em.find(Toy.class, toy.getId());
+                        else {
+                            em.persist(toy);
+                        }
+                    });
+                    em.persist(child);
+                }
+            });
+            em.persist(p);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new RenameMeDTO(rme);
+        return p;
     }
-    */
-
     @Override
     public Person create(Person person) throws EntityNotFoundException {
+        Person p = new Person(person.getFirstName(),person.getLastName(),person.getEmail(),person.getAddressStreet());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -64,52 +75,58 @@ public class PersonFacade implements IDataFacade<Person> {
         } finally {
             em.close();
         }
-        return person;
+        return p;
+    }
+    */
+
+    @Override
+    public Phone create(Phone phone) throws EntityNotFoundException{
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(phone);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return null;
     }
 
-
-    public Person getByPrimeKey(int id) throws EntityNotFoundException {
+    public Phone getByInt(int fill) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, id);
+        Phone p = em.find(Phone.class, fill);
         if (p == null)
-            throw new EntityNotFoundException("The Person entity with ID: " + id + " Was not found");
+            throw new EntityNotFoundException("The Phone entity with ID: " + fill + " Was not found");
         return p;
     }
 
 
-    public Person getByNumber(int id) throws EntityNotFoundException {
+
+    @Override
+    public List<Phone> getAll() {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, id);
-        if (p == null)
-            throw new EntityNotFoundException("The Person entity with ID: " + id + " Was not found");
-        return p;
+        TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
+        List<Phone> phones = query.getResultList();
+        return phones;
     }
 
     @Override
-    public List<Person> getAll() {
-        EntityManager em = getEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<Person> persons = query.getResultList();
-        return persons;
-    }
-
-    @Override
-    public Person update(Person person) throws EntityNotFoundException {
-        if (person.getId() == 0)
-            throw new IllegalArgumentException("No Person can be updated when id is missing");
+    public Phone update(Phone phone) throws EntityNotFoundException {
+        if (phone.getNumber() == 0)
+            throw new IllegalArgumentException("No Phone can be updated when id is missing");
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
-        Person p = em.merge(person);
+        Phone p = em.merge(phone);
         em.getTransaction().commit();
         return p;
     }
 
     @Override
-    public Person delete(int id) throws EntityNotFoundException {
+    public Phone delete(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, id);
+        Phone p = em.find(Phone.class, id);
         if (p == null)
-            throw new EntityNotFoundException("Could not remove Person with id: " + id);
+            throw new EntityNotFoundException("Could not remove Phone with id: " + id);
         em.getTransaction().begin();
         em.remove(p);
         em.getTransaction().commit();
@@ -117,13 +134,13 @@ public class PersonFacade implements IDataFacade<Person> {
     }
 
     @Override
-    public Person delete(String id) throws errorhandling.EntityNotFoundException {
+    public Phone delete(String id) throws errorhandling.EntityNotFoundException {
         return null;
     }
 
        /* public static void main(String[] args) {
             emf = EMF_Creator.createEntityManagerFactory();
-            IDataFacade fe = getPersonFacade(emf);
+            IDataFacade fe = getPhoneFacade(emf);
             fe.getAll().forEach(dto->System.out.println(dto));
         }
 */
