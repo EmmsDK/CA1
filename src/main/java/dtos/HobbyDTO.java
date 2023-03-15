@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class HobbyDTO implements Serializable {
-    private final String name;
+    private String name;
     private final String wikiLink;
     private final String category;
     private final String type;
@@ -18,6 +18,10 @@ public class HobbyDTO implements Serializable {
         this.category = getCategory();
         this.type = getType();
 
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {

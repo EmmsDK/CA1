@@ -60,6 +60,10 @@ public class PersonDTO implements Serializable {
         this.hobbies.forEach(hobby->p.addHobby(hobby.getEntity()));
         return p;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     @Override
     public boolean equals(Object o) {
