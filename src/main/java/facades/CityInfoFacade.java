@@ -87,7 +87,7 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         } finally {
             em.close();
         }
-        return null;
+        return ci;
     }
 
     public Address createAddress(Address address) throws EntityNotFoundException {
