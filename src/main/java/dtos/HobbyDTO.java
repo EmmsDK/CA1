@@ -1,6 +1,7 @@
 package dtos;
 
 import entities.Hobby;
+import entities.Phone;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -33,6 +34,13 @@ public class HobbyDTO implements Serializable {
 
     public String getType() {
         return type;
+    }
+
+    public Hobby getEntity(){
+        Hobby h= new Hobby(this.name, this.wikiLink, this.category, this.type);
+        if(name != null)
+            h.setName(this.name);
+        return h;
     }
 
     @Override
