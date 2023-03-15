@@ -1,17 +1,19 @@
 package dtos;
-/*
+
 import entities.Phone;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class PhoneDTO implements Serializable {
-    private final Integer number;
-    private final String description;
+    private  Integer number;
+    private  String description;
 
-    public PhoneDTO(Integer number, String description) {
-        this.number = number;
-        this.description = description;
+    public PhoneDTO(Phone phone) {
+        if(phone.getNumber() != null)
+            this.number = phone.getNumber();
+
+        this.description = phone.getDescription();
     }
 
     public Integer getNumber() {
@@ -39,8 +41,7 @@ public class PhoneDTO implements Serializable {
     public Phone getEntity(){
         Phone p = new Phone(this.number, this.description);
         if(number != 0)
-            p.setId(this.id);
-        this.children.forEach(child->p.addChild(child.getEntity()));
+            p.setNumber(this.number);
         return p;
     }
 
@@ -52,4 +53,3 @@ public class PhoneDTO implements Serializable {
     }
 }
 
- */
