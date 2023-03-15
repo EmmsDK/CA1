@@ -55,4 +55,9 @@ public class CityInfo {
         this.addresses.add(address);
         address.setCityInfo(this); //Child gets a parent when parent gets the child
     }
+
+    @Override
+    public String toString() {
+        return "City: " + city + ", " + zipCode;
+    }
 }

@@ -97,7 +97,7 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         address.setCityInfo(new CityInfo(zipCode, city));
         try {
             em.getTransaction().begin();
-            em.persist(address);
+            em.merge(address);
             em.getTransaction().commit();
         } finally {
             em.close();

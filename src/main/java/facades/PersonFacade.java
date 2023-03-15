@@ -60,7 +60,7 @@ public class PersonFacade implements IDataFacade<Person> {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(person);
+            person = em.merge(person);
             em.getTransaction().commit();
         } finally {
             em.close();
