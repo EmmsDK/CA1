@@ -1,24 +1,31 @@
 package dtos;
-/*
+
+import entities.Person;
+import entities.Phone;
+
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 public class PersonDTO implements Serializable {
-    private final Integer id;
-    private final String email;
-    private final String firstName;
-    private final String lastName;
-    private final Set<PhoneDTO> phones;
-    private final Set<HobbyDTO> hobbies;
+    private  Integer id;
+    private  String email;
+    private  String firstName;
+    private  String lastName;
+    private List<PhoneDTO> phones;
+    private  List<HobbyDTO> hobbies;
 
-    public PersonDTO(Integer id, String email, String firstName, String lastName, Set<PhoneDTO> phones, Set<HobbyDTO> hobbies) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phones = phones;
-        this.hobbies = hobbies;
+    public PersonDTO(Person person) {
+        if(person.getId() != null)
+            this.id = person.getId();
+
+        this.email = person.getEmail();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        person.getPhones().forEach(phone->this.phones.add(new PhoneDTO(phone)));
+        person.getHobbies().forEach(hobby->this.hobbies.add(new HobbyDTO(hobby)));
+
     }
 
     public Integer getId() {
@@ -37,12 +44,19 @@ public class PersonDTO implements Serializable {
         return lastName;
     }
 
-    public Set<PhoneDTO> getPhones() {
+    public List<PhoneDTO> getPhones() {
         return phones;
     }
 
-    public Set<HobbyDTO> getHobbies() {
+    public List<HobbyDTO> getHobbies() {
         return hobbies;
+    }
+
+    public Person getEntity(){
+        Person p = new Person(this.email, this.firstName, this.lastName);
+        if(id != 0)
+            p.setId(this.id);
+        return p;
     }
 
     @Override
@@ -74,4 +88,3 @@ public class PersonDTO implements Serializable {
                 "hobbies = " + hobbies + ")";
     }
 }
-*/

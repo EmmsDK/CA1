@@ -53,7 +53,7 @@ public class CityInfo {
     }
     public void addAddress(Address address) {
         this.addresses.add(address);
-        address.setCityinfoZipcode(this);
+        address.setCityInfo(this);
 
     }
 

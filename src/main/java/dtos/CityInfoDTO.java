@@ -1,15 +1,25 @@
 package dtos;
 
+import entities.Address;
+import entities.CityInfo;
+
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class CityInfoDTO implements Serializable {
-    private final Integer zipCode;
-    private final String city;
+    private  Integer zipCode;
+    private  String city;
+    private List<AddressDTO> addresses;
 
-    public CityInfoDTO(Integer zipCode, String city) {
-        this.zipCode = zipCode;
-        this.city = city;
+    public CityInfoDTO(CityInfo cityInfo) {
+
+       if (cityInfo.getZipCode()!=null)
+           this.zipCode = cityInfo.getZipCode();
+
+        this.city = getCity();
+        cityInfo.getAddresses().forEach(address->this.addresses.add(new AddressDTO(address)));
+
     }
 
     public Integer getZipCode() {
@@ -26,7 +36,8 @@ public class CityInfoDTO implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         CityInfoDTO entity = (CityInfoDTO) o;
         return Objects.equals(this.zipCode, entity.zipCode) &&
-                Objects.equals(this.city, entity.city);
+                Objects.equals(this.city, entity.city) &&
+                Objects.equals(this.addresses, entity.addresses);
     }
 
     @Override

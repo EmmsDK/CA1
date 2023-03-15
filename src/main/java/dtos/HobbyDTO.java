@@ -1,5 +1,7 @@
 package dtos;
 
+import entities.Hobby;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -9,11 +11,12 @@ public class HobbyDTO implements Serializable {
     private final String category;
     private final String type;
 
-    public HobbyDTO(String name, String wikiLink, String category, String type) {
-        this.name = name;
-        this.wikiLink = wikiLink;
-        this.category = category;
-        this.type = type;
+    public HobbyDTO(Hobby hobby) {
+        this.name = hobby.getName();
+        this.wikiLink = getWikiLink();
+        this.category = getCategory();
+        this.type = getType();
+
     }
 
     public String getName() {
