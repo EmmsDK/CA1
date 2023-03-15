@@ -55,6 +55,8 @@ public class PersonFacade implements IDataFacade<Person> {
     }
     */
 
+
+
     @Override
     public Person create(Person person) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
@@ -66,6 +68,16 @@ public class PersonFacade implements IDataFacade<Person> {
             em.close();
         }
         return person;
+    }
+
+    @Override
+    public Person getByString(String fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
+    @Override
+    public Person getByInt(int fill) throws errorhandling.EntityNotFoundException {
+        return null;
     }
 
 
