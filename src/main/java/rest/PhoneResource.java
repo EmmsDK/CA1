@@ -19,34 +19,29 @@ import javax.ws.rs.Path;
 public class PhoneResource {
 
 
+    private static final IDataFacade<PhoneDTO> FACADE = PhoneDTOFacade.getFacade();
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-        private static final IDataFacade<PhoneDTO> FACADE = PhoneDTOFacade.getFacade();
-        private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
-        @GET
-        @Produces({MediaType.APPLICATION_JSON})
-        public Response getAll() {
-            return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
-        }
-
-        @GET
-        @Path("/{id}")
-        @Produces({MediaType.APPLICATION_JSON})
-        public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
-            PhoneDTO p = FACADE.getByInt(id);
-            return Response.ok().entity(GSON.toJson(p)).build();
-        }
-
-
-
-
-
-        @DELETE
-        @Path("{id}")
-        @Produces({MediaType.APPLICATION_JSON})
-        public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
-            PhoneDTO deleted = FACADE.delete(id);
-            return Response.ok().entity(GSON.toJson(deleted)).build();
-        }
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAll() {
+        return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
     }
-*/''
+
+    @GET
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
+        PhoneDTO p = FACADE.getByInt(id);
+        return Response.ok().entity(GSON.toJson(p)).build();
+    }
+
+
+    @DELETE
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
+        PhoneDTO deleted = FACADE.delete(id);
+        return Response.ok().entity(GSON.toJson(deleted)).build();
+    }
+}
