@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>CA1</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>CA1</h1>
+<body>
 
-    <p>Iteration one (Thursday - Friday): Start code setup + CI pipeline + JPA + Facade + facade test <br>
-        The API description must be almost (we are using an iterative process) complete and available as a page on your deployed project. Please use this template  to document your endpoints<br>
-        The plan for the three Iterations must be available as a page on your deployed project, including a class diagram, as it is at this stage of the project, as well as screen pics of your Kanban board.<br>
-        The plan for the three Iterations can either be a copy of our suggestion below, or Iteration 1 as given below and your own plan for the remaining Iterations if your “product owner” agrees.<br>
-        The CI-pipeline must be set up on GitHub Actions.<br>
-        Some of the Entity Classes and the Facade(s) must be ready with supplementing tests<br>
+<h1>The Document Object</h1>
+<h2>The addEventListener() Method</h2>
 
-        Who was active during this sprint?<br>
-        - We were all active during this sprint<br>
-        <br>
-        Who did what, during this sprint?<br>
-        - Emilio imported the startcode and connected it to the git repository as well as made sure Git Kraken worked with the new project<br>
-        - William created the domain model in MySql from our initial domain model<br>
-        - Johan created the initial entities and connected the startcode to the database using JPA<br>
-        <br>
-        What did your team accomplish during this sprint?<br>
-        We finished the initial setup with phase one<br>
-    </p>
-    </body>
+<p>Click anywhere in the document to display "Hello World!".</p>
+
+<p id="demo"></p>
+
+<script>
+    document.addEventListener("click", myFunction);
+
+    function myFunction() {
+        document.getElementById("demo").innerHTML = "Hello World";
+    }
+</script>
+
+</body>
 </html>
