@@ -25,7 +25,7 @@ public class CityFacade implements IDataFacade<City> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<City> getCityInfoFacade(EntityManagerFactory _emf) {
+    public static IDataFacade<City> getCityFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new CityFacade();
@@ -91,12 +91,12 @@ public class CityFacade implements IDataFacade<City> {
     }
 
     @Override
-    public CityInfo getByString(String fill) throws errorhandling.EntityNotFoundException {
+    public City getByString(String fill) throws errorhandling.EntityNotFoundException {
         return null;
     }
 
     @Override
-    public CityInfo getByInt(int fill) throws errorhandling.EntityNotFoundException {
+    public City getByInt(int fill) throws errorhandling.EntityNotFoundException {
         return null;
     }
 
@@ -159,9 +159,9 @@ public class CityFacade implements IDataFacade<City> {
     @Override
     public City delete(String city) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        TypedQuery<City> cityInfoTypedQuery = em.createQuery("SELECT c FROM City c WHERE c.cityName = :city", City.class);
+        TypedQuery<City> cityTypedQuery = em.createQuery("SELECT c FROM City c WHERE c.cityName = :city", City.class);
         try {
-            City ci = cityInfoTypedQuery.setParameter("city", city).getSingleResult();
+            City ci = cityTypedQuery.setParameter("city", city).getSingleResult();
             em.getTransaction().begin();
             em.remove(ci);
             em.getTransaction().commit();
@@ -174,7 +174,7 @@ public class CityFacade implements IDataFacade<City> {
 
        /* public static void main(String[] args) {
             emf = EMF_Creator.createEntityManagerFactory();
-            IDataFacade fe = getCityInfoFacade(emf);
+            IDataFacade fe = getInfoFacade(emf);
             fe.getAll().forEach(dto->System.out.println(dto));
         }
 */
