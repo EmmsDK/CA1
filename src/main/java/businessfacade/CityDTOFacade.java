@@ -1,16 +1,16 @@
-package businessfacades;
+package businessfacade;
 
 
 
-import dtos.CityInfoDTO;
+import dtos.CityDTO;
 import dtos.HobbyDTO;
 
 
-import entities.CityInfo;
+import entities.City;
 import entities.Hobby;
 
 import errorhandling.EntityNotFoundException;
-import facades.CityInfoFacade;
+import facades.CityFacade;
 import facades.HobbyFacade;
 import facades.IDataFacade;
 
@@ -18,59 +18,59 @@ import utils.EMF_Creator;
 
 import java.util.List;
 
-public class CityInfoDTOFacade implements IDataFacade<CityInfoDTO> {
-    private static IDataFacade<CityInfoDTO> instance;
-    private static IDataFacade<CityInfo> cityInfoFacade;
+public class CityDTOFacade implements IDataFacade<CityDTO> {
+    private static IDataFacade<CityDTO> instance;
+    private static IDataFacade<City> cityFacade;
 
     //Private Constructor to ensure Singleton
-    private CityInfoDTOFacade() {}
+    private CityDTOFacade() {}
 
-    public static IDataFacade<CityInfoDTO> getFacade() {
+    public static IDataFacade<CityDTO> getFacade() {
         if (instance == null) {
-            cityInfoFacade = CityInfoFacade.getCityInfoFacade(EMF_Creator.createEntityManagerFactory());
-            instance = new CityInfoDTOFacade();
+            cityFacade = CityFacade.getCityFacade(EMF_Creator.createEntityManagerFactory());
+            instance = new CityDTOFacade();
         }
         return instance;
     }
 
     @Override
-    public CityInfoDTO create(CityInfoDTO cityInfoDTO) {
-        CityInfo h = cityInfoDTO.getEntity();
-        h = cityInfoFacade.create(h);
-        return new CityInfoDTO(h);
+    public CityDTO create(CityDTO cityDTO) {
+        City c = cityDTO.getEntity();
+        c = cityFacade.create(c);
+        return new CityDTO(c);
     }
 
 
 
     @Override
-    public CityInfoDTO getByString(String fill) throws EntityNotFoundException {
+    public CityDTO getByString(String fill) throws EntityNotFoundException {
         return null;
     }
 
     @Override
-    public CityInfoDTO getByInt(int id) throws EntityNotFoundException {
-        return new CityInfoDTO(cityInfoFacade.getByInt(id));
+    public CityDTO getByInt(int id) throws EntityNotFoundException {
+        return new CityDTO(cityFacade.getByInt(id));
     }
 
     @Override
-    public List<CityInfoDTO> getAll() {
-        return CityInfoDTO.toList(cityInfoFacade.getAll());
+    public List<CityDTO> getAll() {
+        return CityDTO.toList(cityFacade.getAll());
     }
 
 
     @Override
-    public CityInfoDTO update(CityInfoDTO cityinfoDTO) throws EntityNotFoundException {
-        CityInfo ci = cityInfoFacade.update(cityinfoDTO.getEntity());
-        return new CityInfoDTO(ci);
+    public CityDTO update(CityDTO cityDTO) throws EntityNotFoundException {
+        City c = cityFacade.update(cityDTO.getEntity());
+        return new CityDTO(c);
     }
 
     @Override
-    public CityInfoDTO delete(int id) throws EntityNotFoundException {
-        return new CityInfoDTO(cityInfoFacade.delete(id));
+    public CityDTO delete(int id) throws EntityNotFoundException {
+        return new CityDTO(cityFacade.delete(id));
     }
 
     @Override
-    public CityInfoDTO delete(String id) throws EntityNotFoundException {
+    public CityDTO delete(String id) throws EntityNotFoundException {
         return null;
     }
 }

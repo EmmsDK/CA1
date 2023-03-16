@@ -1,7 +1,8 @@
 package dtos;
 
 import entities.Address;
-import entities.CityInfo;
+import entities.City;
+
 import entities.Hobby;
 import entities.Person;
 
@@ -10,41 +11,33 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-<<<<<<< HEAD:src/main/java/dtos/CityDTO.java
-public class CityDTO implements Serializable {
-    private final Integer zipCode;
-    private final String city;
 
-    public CityDTO(Integer zipCode, String city) {
-        this.zipCode = zipCode;
-        this.city = city;
-=======
-public class CityInfoDTO implements Serializable {
+public class CityDTO implements Serializable {
     private  Integer zipCode;
-    private  String city;
+    private  String cityName;
     private List<AddressDTO> addresses;
 
-    public CityInfoDTO(CityInfo cityInfo) {
+    public CityDTO(City city) {
 
-       if (cityInfo.getZipCode()!=null)
-           this.zipCode = cityInfo.getZipCode();
+       if (city.getZipCode()!=null)
+           this.zipCode = city.getZipCode();
 
-        this.city = getCity();
-        cityInfo.getAddresses().forEach(address->this.addresses.add(new AddressDTO(address)));
+        this.cityName = city.getCityName();
+        city.getAddresses().forEach(address->this.addresses.add(new AddressDTO(address)));
 
->>>>>>> JTest:src/main/java/dtos/CityInfoDTO.java
+
     }
 
     public Integer getZipCode() {
         return zipCode;
     }
 
-    public String getCity() {
-        return city;
+    public String getCityName() {
+        return cityName;
     }
 
-    public CityInfo getEntity() {
-        CityInfo ci = new CityInfo(this.zipCode, this.city);
+    public City getEntity() {
+        City ci = new City(this.zipCode, this.cityName);
         if (zipCode != 0)
             ci.setZipCode(this.zipCode);
         this.addresses.forEach(address->ci.addAddress(address.getEntity()));
@@ -57,23 +50,23 @@ public class CityInfoDTO implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         CityDTO entity = (CityDTO) o;
         return Objects.equals(this.zipCode, entity.zipCode) &&
-                Objects.equals(this.city, entity.city) &&
+                Objects.equals(this.cityName, entity.cityName) &&
                 Objects.equals(this.addresses, entity.addresses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(zipCode, city);
+        return Objects.hash(zipCode, cityName);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + zipCode + ", " +
-                "city = " + city + ")";
+                "city = " + cityName + ")";
     }
-    public static List<CityInfoDTO> toList(List<CityInfo> cis) {
-        return cis.stream().map(CityInfoDTO::new).collect(Collectors.toList());
+    public static List<CityDTO> toList(List<City> citys) {
+        return citys.stream().map(CityDTO::new).collect(Collectors.toList());
     }
 
 }
