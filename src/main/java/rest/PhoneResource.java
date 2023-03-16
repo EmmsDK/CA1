@@ -1,12 +1,12 @@
 package rest;
-/*
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import businessfacades.PhoneDTOFacade;
 
 import dtos.PhoneDTO;
 import errorhandling.EntityNotFoundException;
-import datafacades.IDataFacade;
-import businessfacades.ParentDTOFacade;
+
 import facades.IDataFacade;
 
 import javax.ws.rs.*;
@@ -20,7 +20,7 @@ public class PhoneResource {
 
 
 
-        private static final IDataFacade<PhoneDTO> FACADE =  ParentDTOFacade.getFacade();
+        private static final IDataFacade<PhoneDTO> FACADE = PhoneDTOFacade.getFacade();
         private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
         @GET
@@ -49,4 +49,4 @@ public class PhoneResource {
             return Response.ok().entity(GSON.toJson(deleted)).build();
         }
     }
-*/
+*/''
