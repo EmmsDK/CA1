@@ -1,19 +1,19 @@
-package businessfacades;
+package businessfacade;
 
 
 
 import dtos.AddressDTO;
-import dtos.CityInfoDTO;
+import dtos.CityDTO;
 import dtos.HobbyDTO;
 
 
 import entities.Address;
-import entities.CityInfo;
+import entities.City;
 import entities.Hobby;
 
 import errorhandling.EntityNotFoundException;
 import facades.AddressFacade;
-import facades.CityInfoFacade;
+import facades.CityFacade;
 import facades.HobbyFacade;
 import facades.IDataFacade;
 

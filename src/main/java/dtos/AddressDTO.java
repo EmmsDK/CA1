@@ -3,7 +3,7 @@ package dtos;
 import entities.Address;
 import entities.Hobby;
 import entities.Person;
-import facades.CityInfoFacade;
+
 
 import java.io.Serializable;
 import java.util.List;
