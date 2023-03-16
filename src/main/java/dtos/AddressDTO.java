@@ -1,12 +1,14 @@
 package dtos;
 
 import entities.Address;
+import entities.Hobby;
 import entities.Person;
 import facades.CityInfoFacade;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class AddressDTO implements Serializable {
     private  String street;
@@ -52,6 +54,11 @@ public class AddressDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(street, additionalInfo,people);
     }
+
+    public static List<AddressDTO> toList(List<Address> addresses) {
+        return addresses.stream().map(AddressDTO::new).collect(Collectors.toList());
+    }
+
 
     @Override
     public String toString() {

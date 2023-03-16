@@ -101,6 +101,11 @@ public class HobbyFacade implements IDataFacade<Hobby> {
         return h;
     }
 
+    @Override
+    public Hobby getByInt(int fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
 
     /*public Hobby getByNumber(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();

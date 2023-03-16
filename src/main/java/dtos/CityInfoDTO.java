@@ -2,11 +2,13 @@ package dtos;
 
 import entities.Address;
 import entities.CityInfo;
+import entities.Hobby;
 import entities.Person;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CityInfoDTO implements Serializable {
     private  Integer zipCode;
@@ -60,4 +62,8 @@ public class CityInfoDTO implements Serializable {
                 "id = " + zipCode + ", " +
                 "city = " + city + ")";
     }
+    public static List<CityInfoDTO> toList(List<CityInfo> cis) {
+        return cis.stream().map(CityInfoDTO::new).collect(Collectors.toList());
+    }
+
 }

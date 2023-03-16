@@ -2,8 +2,12 @@ package facades;
 
 import entities.Address;
 import entities.CityInfo;
+import entities.Hobby;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -11,13 +15,13 @@ import java.util.List;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-public class CityInfoFacade implements IDataFacade<CityInfo> {
+public class AddressFacade implements IDataFacade<Address> {
 
-    private static CityInfoFacade instance;
+    private static AddressFacade instance;
     private static EntityManagerFactory emf;
 
     //Private Constructor to ensure Singleton
-    private CityInfoFacade() {
+    private AddressFacade() {
     }
 
 
@@ -25,10 +29,10 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<CityInfo> getCityInfoFacade(EntityManagerFactory _emf) {
+    public static IDataFacade<Address> getAddressFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new CityInfoFacade();
+            instance = new AddressFacade();
         }
         return instance;
     }
@@ -37,7 +41,7 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
         return emf.createEntityManager();
     }
 /*
-    public CityInfo create(CityInfo p) {
+    public Hobby create(Hobby p) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -78,103 +82,80 @@ public class CityInfoFacade implements IDataFacade<CityInfo> {
     */
 
     @Override
-    public CityInfo create(CityInfo ci) throws EntityNotFoundException {
+    public Address create(Address address) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(ci);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-        return ci;
-    }
-
-    @Override
-    public CityInfo getByString(String fill) throws errorhandling.EntityNotFoundException {
-        return null;
-    }
-
-    @Override
-    public CityInfo getByInt(int fill) throws errorhandling.EntityNotFoundException {
-        return null;
-    }
-
-    public Address createAddress(Address address) throws EntityNotFoundException {
-        EntityManager em = getEntityManager();
-        int zipCode = address.getCityInfo().getZipCode();
-        String city = em.find(CityInfo.class, zipCode).getCity();
-        address.setCityInfo(new CityInfo(zipCode, city));
-        try {
-            em.getTransaction().begin();
-            em.merge(address);
+            em.persist(address);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
         return address;
     }
-    
-    public CityInfo getByZipCode(int zipCode) throws EntityNotFoundException {
+
+    public Address getByString(String fill) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        CityInfo ci = em.find(CityInfo.class, zipCode);
-        if (ci == null)
-            throw new EntityNotFoundException("The CityInfo entity with zipCode: " + zipCode + " Was not found");
-        return ci;
-    }
-
-
-
-    @Override
-    public List<CityInfo> getAll() {
-        EntityManager em = getEntityManager();
-        TypedQuery<CityInfo> query = em.createQuery("SELECT p FROM CityInfo p", CityInfo.class);
-        List<CityInfo> cis = query.getResultList();
-        return cis;
+        Address a = em.find(Address.class, fill);
+        if (a == null)
+            throw new EntityNotFoundException("The Hobby entity with ID: " + fill + " Was not found");
+        return a;
     }
 
     @Override
-    public CityInfo update(CityInfo ci) throws EntityNotFoundException {
-        if (ci.getZipCode() == 0)
-            throw new IllegalArgumentException("No CityInfo can be updated when id is missing");
+    public Address getByInt(int fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
+
+    /*public Hobby getByNumber(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        CityInfo p = em.merge(ci);
-        em.getTransaction().commit();
+        Hobby p = em.find(Hobby.class, id);
+        if (p == null)
+            throw new EntityNotFoundException("The Hobby entity with ID: " + id + " Was not found");
         return p;
+    }*/
+
+    @Override
+    public List<Address> getAll() {
+        EntityManager em = getEntityManager();
+        TypedQuery<Address> query = em.createQuery("SELECT a FROM Address a", Address.class);
+        List<Address> address = query.getResultList();
+        return address;
     }
 
     @Override
-    public CityInfo delete(int id) throws EntityNotFoundException {
+    public Address update(Address address) throws EntityNotFoundException {
+        if (address.getStreet() == null)
+            throw new IllegalArgumentException("No Hobby can be updated when id is missing");
         EntityManager em = getEntityManager();
-        CityInfo ci = em.find(CityInfo.class, id);
-        if (ci == null)
-            throw new EntityNotFoundException("Could not remove CityInfo with id: " + id);
         em.getTransaction().begin();
-        em.remove(ci);
+        Address a = em.merge(address);
         em.getTransaction().commit();
-        return ci;
+        return a;
     }
 
     @Override
-    public CityInfo delete(String city) throws EntityNotFoundException {
-        EntityManager em = getEntityManager();
-        TypedQuery<CityInfo> cityInfoTypedQuery = em.createQuery("SELECT c FROM CityInfo c WHERE c.city = :city", CityInfo.class);
-        try {
-            CityInfo ci = cityInfoTypedQuery.setParameter("city", city).getSingleResult();
-            em.getTransaction().begin();
-            em.remove(ci);
-            em.getTransaction().commit();
-            return ci;
-        } catch (NoResultException e) {
-            throw new EntityNotFoundException("Could not remove CityInfo with cityname: " + city);
-        }
+    public Address delete(int id) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
 
+
+    @Override
+    public Address delete(String name) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        Address a = em.find(Address.class, name);
+        if (a == null)
+            throw new EntityNotFoundException("Could not remove CityInfo with name: " + name);
+        em.getTransaction().begin();
+        em.remove(a);
+        em.getTransaction().commit();
+        return a;
     }
 
        /* public static void main(String[] args) {
             emf = EMF_Creator.createEntityManagerFactory();
-            IDataFacade fe = getCityInfoFacade(emf);
+            IDataFacade fe = getHobbyFacade(emf);
             fe.getAll().forEach(dto->System.out.println(dto));
         }
 */

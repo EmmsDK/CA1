@@ -1,6 +1,7 @@
 package dtos;
 
 import entities.Hobby;
+import entities.Phone;
 
 import java.io.Serializable;
 import java.util.List;
