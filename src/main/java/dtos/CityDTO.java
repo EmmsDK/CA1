@@ -3,11 +3,11 @@ package dtos;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class CityInfoDTO implements Serializable {
+public class CityDTO implements Serializable {
     private final Integer zipCode;
     private final String city;
 
-    public CityInfoDTO(Integer zipCode, String city) {
+    public CityDTO(Integer zipCode, String city) {
         this.zipCode = zipCode;
         this.city = city;
     }
@@ -24,7 +24,7 @@ public class CityInfoDTO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CityInfoDTO entity = (CityInfoDTO) o;
+        CityDTO entity = (CityDTO) o;
         return Objects.equals(this.zipCode, entity.zipCode) &&
                 Objects.equals(this.city, entity.city);
     }

@@ -1,28 +1,28 @@
 package entities;
 
-import facades.CityInfoFacade;
-
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "address")
 public class Address {
     @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(name = "street", nullable = false, length = 90)
     private String street;
 
     @Column(name = "additionalInfo", length = 45)
     private String additionalInfo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cityInfo_zipCode", nullable = false, referencedColumnName = "zipCode")
-    private CityInfo cityInfo;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "city_zipCode", nullable = false, referencedColumnName = "zipCode")
+    private City city;
 
-    @OneToMany(mappedBy = "addressStreet", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<Person> people;
 
     public Address(){
@@ -35,6 +35,14 @@ public class Address {
         this.people = new ArrayList<>();
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public List<Person> getPeople() {
         return people;
     }
@@ -43,12 +51,12 @@ public class Address {
         this.people = people;
     }
 
-    public CityInfo getCityInfo() {
-        return cityInfo;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityInfo(CityInfo cityInfo) {
-        this.cityInfo = cityInfo;
+    public void setCity(City cityInfo) {
+        this.city = cityInfo;
     }
 
     public String getAdditionalInfo() {
@@ -73,6 +81,6 @@ public class Address {
 
     @Override
     public String toString() {
-        return  street + " " + additionalInfo + ", " + cityInfo.getZipCode() + " " + cityInfo.getCity();
+        return  street + " " + additionalInfo + ", " + city.getZipCode() + " " + city.getCityName();
     }
 }

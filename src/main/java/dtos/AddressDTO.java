@@ -1,16 +1,14 @@
 package dtos;
 
-import facades.CityInfoFacade;
-
 import java.io.Serializable;
 import java.util.Objects;
 
 public class AddressDTO implements Serializable {
     private final String street;
     private final String additionalInfo;
-    private final CityInfoDTO cityInfoDTO;
+    private final CityDTO cityInfoDTO;
 
-    public AddressDTO(String street, String additionalInfo, CityInfoDTO cityInfoDTO) {
+    public AddressDTO(String street, String additionalInfo, CityDTO cityInfoDTO) {
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.cityInfoDTO = cityInfoDTO;
@@ -24,7 +22,7 @@ public class AddressDTO implements Serializable {
         return additionalInfo;
     }
 
-    public CityInfoDTO getCityInfoDTO() {
+    public CityDTO getCityInfoDTO() {
         return cityInfoDTO;
     }
 

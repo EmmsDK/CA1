@@ -2,30 +2,28 @@ package entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "cityInfo")
-public class CityInfo {
+@Table(name = "city")
+public class City {
     @Id
     @Column(name = "zipCode", nullable = false)
     private Integer zipCode;
 
-    @Column(name = "city", nullable = false, length = 90)
-    private String city;
+    @Column(name = "cityName", nullable = false, length = 90)
+    private String cityName;
 
-    @OneToMany(mappedBy = "cityInfo", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.PERSIST)
     private List<Address> addresses;
 
-    public CityInfo(Integer zipCode, String city) {
+    public City(Integer zipCode, String cityName) {
         this.zipCode = zipCode;
-        this.city = city;
+        this.cityName = cityName;
         this.addresses = new ArrayList<>();
     }
 
-    public CityInfo() {
+    public City() {
     }
 
     public List<Address> getAddresses() {
@@ -36,12 +34,12 @@ public class CityInfo {
         this.addresses = addresses;
     }
 
-    public String getCity() {
-        return city;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCityName(String city) {
+        this.cityName = city;
     }
 
     public Integer getZipCode() {
@@ -53,11 +51,11 @@ public class CityInfo {
     }
     public void addAddress(Address address) {
         this.addresses.add(address);
-        address.setCityInfo(this); //Child gets a parent when parent gets the child
+        address.setCity(this); //Child gets a parent when parent gets the child
     }
 
     @Override
     public String toString() {
-        return "City: " + city + ", " + zipCode;
+        return "City: " + cityName + ", " + zipCode;
     }
 }

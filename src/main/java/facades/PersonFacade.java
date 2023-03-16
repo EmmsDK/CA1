@@ -1,6 +1,5 @@
 package facades;
 
-import entities.CityInfo;
 import entities.Person;
 
 import javax.persistence.EntityManager;

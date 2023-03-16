@@ -1,10 +1,8 @@
 package facades;
 
 import entities.Address;
-import entities.CityInfo;
-import junit.framework.Assert;
+import entities.City;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
@@ -14,19 +12,19 @@ import javax.persistence.EntityManagerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CityInfoFacadeTest {
+public class CityFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static CityInfoFacade facade;
+    private static CityFacade facade;
 
     @BeforeEach
     public void setUp() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        facade = (CityInfoFacade) CityInfoFacade.getCityInfoFacade(emf);
+        facade = (CityFacade) CityFacade.getCityInfoFacade(emf);
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(new CityInfo(1234, "TestCity"));
+            em.persist(new City(1234, "TestCity"));
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -56,17 +54,17 @@ public class CityInfoFacadeTest {
 
     @Test
     void create() {
-        CityInfo ci = facade.create(new CityInfo(1235, "TestCitay"));
-        System.out.println(ci.getCity());
-        assertEquals("TestCitay", ci.getCity());
+        City ci = facade.create(new City(1235, "TestCitay"));
+        System.out.println(ci.getCityName());
+        assertEquals("TestCitay", ci.getCityName());
     }
 
     @Test
     void createAddress() {
         EntityManager em = emf.createEntityManager();
-        CityInfo ci = em.find(CityInfo.class, 1234);
+        City ci = em.find(City.class, 1234);
         Address a = new Address("Testvej", "69");
-        a.setCityInfo(ci);
+        a.setCity(ci);
         System.out.println(facade.createAddress(a).getStreet());
         System.out.println(a.getStreet());
         assertEquals("Testvej", em.find(Address.class, a.getStreet()).getStreet());
@@ -74,17 +72,17 @@ public class CityInfoFacadeTest {
 
     @Test
     void getByZipCode() {
-        CityInfo ci = facade.getByZipCode(2900);
-        assertEquals("Hellerup", ci.getCity());
+        City ci = facade.getByZipCode(2900);
+        assertEquals("Hellerup", ci.getCityName());
         try {
-            assertEquals("The CityInfo entity with zipCode: " + 0000 + " Was not found", facade.getByZipCode(0000));
+            assertEquals("The City entity with zipCode: " + 0000 + " Was not found", facade.getByZipCode(0000));
             fail("Should have thrown an exception");
         }
         catch (Exception e) {
-            String expectedMessage = "The CityInfo entity with zipCode: 0 Was not found";
+            String expectedMessage = "The City entity with zipCode: 0 Was not found";
             assertEquals(expectedMessage, e.getMessage(), "Exception message must be correct");
         }
-        System.out.println(ci.getCity());
+        System.out.println(ci.getCityName());
     }
 
     @Test
@@ -95,17 +93,17 @@ public class CityInfoFacadeTest {
 
     @Test
     void update() {
-        CityInfo ci = facade.getByZipCode(1234);
-        ci.setCity("TæstCity");
+        City ci = facade.getByZipCode(1234);
+        ci.setCityName("TæstCity");
         facade.update(ci);
-        assertEquals("TæstCity", facade.getByZipCode(1234).getCity());
-        System.out.println(facade.getByZipCode(1234).getCity());
+        assertEquals("TæstCity", facade.getByZipCode(1234).getCityName());
+        System.out.println(facade.getByZipCode(1234).getCityName());
         try {
-            assertEquals("No CityInfo can be updated when id is missing", facade.update(new CityInfo(0000, "TestCity")));
+            assertEquals("No City can be updated when id is missing", facade.update(new City(0000, "TestCity")));
             fail("Should have thrown an exception");
         }
         catch (Exception e) {
-            String expectedMessage = "No CityInfo can be updated when id is missing";
+            String expectedMessage = "No City can be updated when id is missing";
             assertEquals(expectedMessage, e.getMessage(), "Exception message must be correct");
         }
     }
@@ -114,11 +112,11 @@ public class CityInfoFacadeTest {
     void delete() {
         System.out.println(facade.delete(1234));
         try {
-            assertEquals("Could not remove CityInfo with id: " + 1234, facade.delete(1234));
+            assertEquals("Could not remove City with id: " + 1234, facade.delete(1234));
             fail("Should have thrown an exception");
         }
         catch (Exception e) {
-            String expectedMessage = "Could not remove CityInfo with id: 1234";
+            String expectedMessage = "Could not remove City with id: 1234";
             assertEquals(expectedMessage, e.getMessage(), "Exception message must be correct");
         }
 
@@ -128,11 +126,11 @@ public class CityInfoFacadeTest {
     void delete2(){
         System.out.println(facade.delete("TestCity").getZipCode());
         try {
-            assertEquals("Could not remove CityInfo with cityname: TestCity", facade.delete("TestCity"));
+            assertEquals("Could not remove City with cityname: TestCity", facade.delete("TestCity"));
             fail("Should have thrown an exception");
         }
         catch (Exception e) {
-            String expectedMessage = "Could not remove CityInfo with cityname: TestCity";
+            String expectedMessage = "Could not remove City with cityname: TestCity";
             assertEquals(expectedMessage, e.getMessage(), "Exception message must be correct");
         }
     }

@@ -1,7 +1,7 @@
 package facades;
 
 import entities.Address;
-import entities.CityInfo;
+import entities.City;
 import entities.Person;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,6 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,15 +23,15 @@ class PersonFacadeTest {
         facade = (PersonFacade) PersonFacade.getPersonFacade(emf);
         EntityManager em = emf.createEntityManager();
         Address address = new Address("Testvej", "69");
-        CityInfo ci = new CityInfo(1234, "TestCity");
-        ci.addAddress(address);
-        address.setCityInfo(ci);
+        City c = new City(1234, "TestCity");
+        c.addAddress(address);
+        address.setCity(c);
         Person person = new Person("John", "Doe", "ostemand@ost.dk");
         person.setAddress(address);
         address.addPerson(person);
         try {
             em.getTransaction().begin();
-            em.persist(person);
+            em.merge(person);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -46,7 +45,7 @@ class PersonFacadeTest {
             em.getTransaction().begin();
             em.createNativeQuery("SET FOREIGN_KEY_CHECKS=0;").executeUpdate();
             em.createNativeQuery("TRUNCATE person;").executeUpdate();
-            em.createNativeQuery("DELETE c FROM CityInfo c WHERE c.zipCode = 1234;").executeUpdate();
+            em.createNativeQuery("DELETE c FROM City c WHERE c.zipCode = 1234;").executeUpdate();
             em.createNativeQuery("DELETE a FROM Address a WHERE a.street = 'Testvej';").executeUpdate();
             em.createNativeQuery("SET FOREIGN_KEY_CHECKS=1;").executeUpdate();
             em.getTransaction().commit();
@@ -63,9 +62,9 @@ class PersonFacadeTest {
     @Test
     void create() {
         EntityManager em = emf.createEntityManager();
-        CityInfo ci = em.find(CityInfo.class, 1234);
+        City c = em.find(City.class, 1234);
         Address a = new Address("TestWay", "48");
-        a.setCityInfo(ci);
+        a.setCity(c);
         Person person = new Person("Dohn", "Joe", "mælkemand@mælk.dk");
         person.setAddress(a);
         System.out.println(facade.create(person));

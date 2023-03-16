@@ -2,9 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "person", indexes = {
@@ -27,14 +25,14 @@ public class Person {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_street", nullable = false, referencedColumnName = "street")
-    private Address addressStreet;
+    @JoinColumn(name = "address_id", nullable = false, referencedColumnName = "street")
+    private Address address;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Phone> phones;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "person-hobby",
+    @JoinTable(name = "person_hobby",
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "hobby_name"))
     private List<Hobby> hobbies;
@@ -59,11 +57,11 @@ public class Person {
     }
 
     public Address getAddress() {
-        return addressStreet;
+        return address;
     }
 
-    public void setAddress(Address addressStreet) {
-        this.addressStreet = addressStreet;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getLastName() {
@@ -127,7 +125,7 @@ public class Person {
                 "\nFirst name: " + firstName +
                 "\nLast name: " + lastName +
                 "\nEmail: " + email +
-                "\nAddress: " + addressStreet;
+                "\nAddress: " + address;
     }
 }
 

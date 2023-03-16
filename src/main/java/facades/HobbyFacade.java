@@ -1,6 +1,5 @@
 package facades;
 
-import entities.CityInfo;
 import entities.Hobby;
 
 import javax.persistence.EntityManager;
@@ -140,7 +139,7 @@ public class HobbyFacade implements IDataFacade<Hobby> {
         EntityManager em = getEntityManager();
         Hobby hobby = em.find(Hobby.class, name);
         if (hobby == null)
-            throw new EntityNotFoundException("Could not remove CityInfo with name: " + name);
+            throw new EntityNotFoundException("Could not remove City with name: " + name);
         em.getTransaction().begin();
         em.remove(hobby);
         em.getTransaction().commit();
