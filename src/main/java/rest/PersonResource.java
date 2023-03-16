@@ -2,7 +2,7 @@ package rest;
 /*
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+import businessfacades.PersonDTOFacade;
 import dtos.PersonDTO;
 import errorhandling.EntityNotFoundException;
 import datafacades.IDataFacade;
@@ -19,7 +19,7 @@ public class PersonResource {
 
 
 
-        private static final IDataFacade<PersonDTO> FACADE =  ParentDTOFacade.getFacade();
+        private static final IDataFacade<PersonDTO> FACADE =  PersonDTOFacade.getFacade();
         private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
         @GET
