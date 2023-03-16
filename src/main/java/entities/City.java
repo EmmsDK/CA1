@@ -51,7 +51,12 @@ public class City {
     }
     public void addAddress(Address address) {
         this.addresses.add(address);
+<<<<<<< HEAD:src/main/java/entities/City.java
         address.setCity(this); //Child gets a parent when parent gets the child
+=======
+        address.setCityInfo(this);
+
+>>>>>>> JTest:src/main/java/entities/CityInfo.java
     }
 
     @Override

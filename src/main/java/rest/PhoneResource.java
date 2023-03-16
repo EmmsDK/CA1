@@ -2,10 +2,12 @@ package rest;
 /*
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.ParentDTO;
+
+import dtos.PhoneDTO;
 import errorhandling.EntityNotFoundException;
 import datafacades.IDataFacade;
 import businessfacades.ParentDTOFacade;
+import facades.IDataFacade;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,7 +20,7 @@ public class PhoneResource {
 
 
 
-        private static final IDataFacade<ParentDTO> FACADE =  ParentDTOFacade.getFacade();
+        private static final IDataFacade<PhoneDTO> FACADE =  ParentDTOFacade.getFacade();
         private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
         @GET
@@ -31,7 +33,7 @@ public class PhoneResource {
         @Path("/{id}")
         @Produces({MediaType.APPLICATION_JSON})
         public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
-            ParentDTO p = FACADE.getById(id);
+            PhoneDTO p = FACADE.getByInt(id);
             return Response.ok().entity(GSON.toJson(p)).build();
         }
 
@@ -43,7 +45,7 @@ public class PhoneResource {
         @Path("{id}")
         @Produces({MediaType.APPLICATION_JSON})
         public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
-            ParentDTO deleted = FACADE.delete(id);
+            PhoneDTO deleted = FACADE.delete(id);
             return Response.ok().entity(GSON.toJson(deleted)).build();
         }
     }

@@ -54,6 +54,8 @@ public class PersonFacade implements IDataFacade<Person> {
     }
     */
 
+
+
     @Override
     public Person create(Person person) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
@@ -65,6 +67,25 @@ public class PersonFacade implements IDataFacade<Person> {
             em.close();
         }
         return person;
+    }
+
+    @Override
+    public Person getByString(String fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
+    @Override
+    public Person getByInt(int fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
+
+    public Person getByPrimeKey(int id) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        Person p = em.find(Person.class, id);
+        if (p == null)
+            throw new EntityNotFoundException("The Person entity with ID: " + id + " Was not found");
+        return p;
     }
 
 

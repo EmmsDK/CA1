@@ -90,6 +90,16 @@ public class CityFacade implements IDataFacade<City> {
         return ci;
     }
 
+    @Override
+    public CityInfo getByString(String fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
+    @Override
+    public CityInfo getByInt(int fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
+
     public Address createAddress(Address address) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         int zipCode = address.getCity().getZipCode();

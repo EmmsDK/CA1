@@ -2,10 +2,12 @@ package rest;
 /*
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.ParentDTO;
+
+import dtos.PersonDTO;
 import errorhandling.EntityNotFoundException;
 import datafacades.IDataFacade;
 import businessfacades.ParentDTOFacade;
+import facades.IDataFacade;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,7 +19,7 @@ public class PersonResource {
 
 
 
-        private static final IDataFacade<ParentDTO> FACADE =  ParentDTOFacade.getFacade();
+        private static final IDataFacade<PersonDTO> FACADE =  ParentDTOFacade.getFacade();
         private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
         @GET
@@ -30,7 +32,7 @@ public class PersonResource {
         @Path("/{id}")
         @Produces({MediaType.APPLICATION_JSON})
         public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
-            ParentDTO p = FACADE.getById(id);
+            PersonDTO p = FACADE.getByInt(id);
             return Response.ok().entity(GSON.toJson(p)).build();
         }
 
@@ -38,8 +40,8 @@ public class PersonResource {
         @Produces({MediaType.APPLICATION_JSON})
         @Consumes({MediaType.APPLICATION_JSON})
         public Response create(String content) {
-            ParentDTO pdto = GSON.fromJson(content, ParentDTO.class);
-            ParentDTO newPdto = FACADE.create(pdto);
+            PersonDTO pdto = GSON.fromJson(content, PersonDTO.class);
+            PersonDTO newPdto = FACADE.create(pdto);
             return Response.ok().entity(GSON.toJson(newPdto)).build();
         }
 
@@ -48,9 +50,9 @@ public class PersonResource {
         @Produces({MediaType.APPLICATION_JSON})
         @Consumes({MediaType.APPLICATION_JSON})
         public Response update(@PathParam("id") int id, String content) throws EntityNotFoundException {
-            ParentDTO pdto = GSON.fromJson(content, ParentDTO.class);
+            PersonDTO pdto = GSON.fromJson(content, PersonDTO.class);
             pdto.setId(id);
-            ParentDTO updated = FACADE.update(pdto);
+            PersonDTO updated = FACADE.update(pdto);
             return Response.ok().entity(GSON.toJson(updated)).build();
         }
 
@@ -58,7 +60,7 @@ public class PersonResource {
         @Path("{id}")
         @Produces({MediaType.APPLICATION_JSON})
         public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
-            ParentDTO deleted = FACADE.delete(id);
+            PersonDTO deleted = FACADE.delete(id);
             return Response.ok().entity(GSON.toJson(deleted)).build();
         }
     }
