@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+    <title>Front Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+    <body>
 
-<h1>The Document Object</h1>
-<h2>The addEventListener() Method</h2>
+    <h1>Welcome to the Front Page!</h1>
+        <input type="text" id="text">
+        <p>What do you want to search for?</p>
+            <button onclick="getall" id="getall">Get all</button><br>
+            <button type="submit" id="phone">Search by phone number</button><br>
+            <button type="submit" id="searchByHobby">Search by hobbies</button><br>
+            <button type="submit" id="searchByNumber">Get number of people with given hobby</button><br>
+        <p name="msg" id="msg"></p>
+    <script src="script.js"></script>
 
-<p>Click anywhere in the document to display "Hello World!".</p>
-
-<p id="demo"></p>
-
-<script>
-    document.addEventListener("click", myFunction);
-
-    function myFunction() {
-        document.getElementById("demo").innerHTML = "Hello World";
-    }
-</script>
-
-</body>
+    </body>
 </html>
