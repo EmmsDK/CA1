@@ -4,7 +4,28 @@ const hobbysearch = document.querySelector("#phone")
 const more = document.querySelector("#searchByHobby")
 const evenmore = document.querySelector("#searchByNumber")
 
+/*
 
+async function getAllCities() {
+    console.log('Getting all city info'); //tracing
+    const apiUrl = 'https://pomhub.dk/';
+    const data = await fetchData(apiUrl);
+
+    // Create table element for city information
+    const table = document.createElement('table');
+    table.classList.add('city');
+    const cityName;
+    const zipcode;
+    const headerRow = table.insertRow();
+
+
+    // next step insert data into table
+    });
+}
+
+document.getElementById('getAllCitiesButton').addEventListener('click', getAllCities);
+
+ */
 
 
 // PEOPLE
