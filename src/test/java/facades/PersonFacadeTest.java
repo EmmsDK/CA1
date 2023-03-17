@@ -48,6 +48,8 @@ class PersonFacadeTest {
             em.createNativeQuery("TRUNCATE person;").executeUpdate();
             em.createNativeQuery("DELETE c FROM City c WHERE c.zipCode = 1234;").executeUpdate();
             em.createNativeQuery("DELETE a FROM Address a WHERE a.street = 'Testvej';").executeUpdate();
+            em.createNativeQuery("DELETE a FROM Address a WHERE a.street = 'TestWay';").executeUpdate();
+            
             em.createNativeQuery("SET FOREIGN_KEY_CHECKS=1;").executeUpdate();
             em.getTransaction().commit();
         } finally {
