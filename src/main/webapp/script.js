@@ -31,7 +31,7 @@ function addPerson(data){
             address: data[i].address,
 
             toString() {
-                return `${this.firstname} ${this.lastname} ${this.email} ${this.gender} ${this.relationshipStatus}`
+                return `${this.firstname} ${this.lastname} ${this.email} ${this.address}`
             }
         }
         people[i] = person
@@ -60,12 +60,12 @@ hobbysearch.addEventListener('click', (event)=>{
         .catch(error=>console.log("An error has occured."))
 })
 
-// MORE
+// phone
 more.addEventListener('click', (event)=>{
-    console.log("CLICKED on more")
+    console.log("CLICKED on search by phone number")
 })
 
-// EVEN MORE
+// searchByHobby
 evenmore.addEventListener('click', (event)=>{
-    console.log("CLICKED on EVEN MORE!")
+    console.log("CLICKED on search By Hobby")
 })
