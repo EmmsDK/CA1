@@ -22,7 +22,7 @@ public class Hobby {
     @Column(name = "type", nullable = false, length = 45)
     private String type;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "person_hobby",
             joinColumns = @JoinColumn(name = "hobby_name", referencedColumnName = "name"),
             inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))

@@ -27,7 +27,6 @@ public class ApplicationConfig extends Application {
         resources.add(rest.PhoneResource.class);
         */
         resources.add(rest.PersonResource.class);
-
         resources.add(rest.RenameMeResource.class);
     }
     

@@ -1,5 +1,7 @@
 package facades;
 
+import entities.Address;
+import entities.City;
 import entities.Hobby;
 
 import javax.persistence.EntityManager;
@@ -13,13 +15,13 @@ import java.util.List;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-public class HobbyFacade implements IDataFacade<Hobby> {
+public class AddressFacade implements IDataFacade<Address> {
 
-    private static HobbyFacade instance;
+    private static AddressFacade instance;
     private static EntityManagerFactory emf;
 
     //Private Constructor to ensure Singleton
-    private HobbyFacade() {
+    private AddressFacade() {
     }
 
 
@@ -27,10 +29,10 @@ public class HobbyFacade implements IDataFacade<Hobby> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<Hobby> getHobbyFacade(EntityManagerFactory _emf) {
+    public static IDataFacade<Address> getAddressFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new HobbyFacade();
+            instance = new AddressFacade();
         }
         return instance;
     }
@@ -80,29 +82,33 @@ public class HobbyFacade implements IDataFacade<Hobby> {
     */
 
     @Override
-    public Hobby create(Hobby hobby) throws EntityNotFoundException {
+    public Address create(Address address) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(hobby);
+            em.persist(address);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return hobby;
+        return address;
     }
 
-    public Hobby getByString(String fill) throws EntityNotFoundException {
+    public Address getByString(String fill) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Hobby h = em.find(Hobby.class, fill);
-        if (h == null)
-            throw new EntityNotFoundException("The Hobby entity with name: " + fill + " Was not found");
-        return h;
+        Address a = em.find(Address.class, fill);
+        if (a == null)
+            throw new EntityNotFoundException("The Address entity with name: " + fill + " Was not found");
+        return a;
     }
 
     @Override
-    public Hobby getById(int fill) throws errorhandling.EntityNotFoundException {
-        return null;
+    public Address getById(int fill) throws errorhandling.EntityNotFoundException {
+            EntityManager em = getEntityManager();
+            Address a = em.find(Address.class, fill);
+            if (a == null)
+                throw new EntityNotFoundException("The Address entity with zipcode: " + fill + " Was not found");
+            return a;
     }
 
 
@@ -115,40 +121,40 @@ public class HobbyFacade implements IDataFacade<Hobby> {
     }*/
 
     @Override
-    public List<Hobby> getAll() {
+    public List<Address> getAll() {
         EntityManager em = getEntityManager();
-        TypedQuery<Hobby> query = em.createQuery("SELECT p FROM Hobby p", Hobby.class);
-        List<Hobby> hobbies = query.getResultList();
-        return hobbies;
+        TypedQuery<Address> query = em.createQuery("SELECT a FROM Address a", Address.class);
+        List<Address> address = query.getResultList();
+        return address;
     }
 
     @Override
-    public Hobby update(Hobby hobby) throws EntityNotFoundException {
-        if (hobby.getName() == null)
+    public Address update(Address address) throws EntityNotFoundException {
+        if (address.getStreet() == null)
             throw new IllegalArgumentException("No Hobby can be updated when id is missing");
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
-        Hobby h = em.merge(hobby);
+        Address a = em.merge(address);
         em.getTransaction().commit();
-        return h;
+        return a;
     }
 
     @Override
-    public Hobby delete(int id) throws errorhandling.EntityNotFoundException {
+    public Address delete(int id) throws errorhandling.EntityNotFoundException {
         return null;
     }
 
 
     @Override
-    public Hobby delete(String name) throws EntityNotFoundException {
+    public Address delete(String name) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Hobby hobby = em.find(Hobby.class, name);
-        if (hobby == null)
-            throw new EntityNotFoundException("Could not remove City with name: " + name);
+        Address a = em.find(Address.class, name);
+        if (a == null)
+            throw new EntityNotFoundException("Could not remove CityInfo with name: " + name);
         em.getTransaction().begin();
-        em.remove(hobby);
+        em.remove(a);
         em.getTransaction().commit();
-        return hobby;
+        return a;
     }
 
        /* public static void main(String[] args) {
@@ -171,5 +177,3 @@ public class HobbyFacade implements IDataFacade<Hobby> {
 */
 
 }
-
-

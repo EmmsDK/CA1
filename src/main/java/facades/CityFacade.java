@@ -2,6 +2,7 @@ package facades;
 
 import entities.Address;
 import entities.City;
+import entities.Hobby;
 
 import javax.persistence.*;
 import java.util.List;
@@ -88,6 +89,24 @@ public class CityFacade implements IDataFacade<City> {
             em.close();
         }
         return ci;
+    }
+
+    @Override
+    public City getByString(String fill) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        City c = em.createQuery("SELECT c FROM City c WHERE c.cityName = :fill", City.class).setParameter("fill", fill).getSingleResult();
+        if (c == null)
+            throw new EntityNotFoundException("The City entity with zipcode: " + fill + " Was not found");
+        return c;
+    }
+
+    @Override
+    public City getById(int fill) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        City c = em.find(City.class, fill);
+        if (c == null)
+            throw new EntityNotFoundException("The City entity with zipcode: " + fill + " Was not found");
+        return c;
     }
 
     public Address createAddress(Address address) throws EntityNotFoundException {

@@ -92,7 +92,12 @@ public class PhoneFacade implements IDataFacade<Phone> {
         return null;
     }
 
-    public Phone getByInt(int fill) throws EntityNotFoundException {
+    @Override
+    public Phone getByString(String fill) throws EntityNotFoundException {
+        return null;
+    }
+
+    public Phone getById(int fill) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         Phone p = em.find(Phone.class, fill);
         if (p == null)

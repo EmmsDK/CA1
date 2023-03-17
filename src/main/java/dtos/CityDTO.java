@@ -1,23 +1,47 @@
 package dtos;
 
+import entities.Address;
+import entities.City;
+
+import entities.Hobby;
+import entities.Person;
+
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 
 public class CityDTO implements Serializable {
-    private final Integer zipCode;
-    private final String city;
+    private  Integer zipCode;
+    private  String cityName;
+    private List<AddressDTO> addresses;
 
-    public CityDTO(Integer zipCode, String city) {
-        this.zipCode = zipCode;
-        this.city = city;
+    public CityDTO(City city) {
+
+       if (city.getZipCode()!=null)
+           this.zipCode = city.getZipCode();
+
+        this.cityName = city.getCityName();
+        city.getAddresses().forEach(address->this.addresses.add(new AddressDTO(address)));
+
+
     }
 
     public Integer getZipCode() {
         return zipCode;
     }
 
-    public String getCity() {
-        return city;
+    public String getCityName() {
+        return cityName;
+    }
+
+    public City getEntity() {
+        City ci = new City(this.zipCode, this.cityName);
+        if (zipCode != 0)
+            ci.setZipCode(this.zipCode);
+        this.addresses.forEach(address->ci.addAddress(address.getEntity()));
+        return ci;
     }
 
     @Override
@@ -26,18 +50,23 @@ public class CityDTO implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         CityDTO entity = (CityDTO) o;
         return Objects.equals(this.zipCode, entity.zipCode) &&
-                Objects.equals(this.city, entity.city);
+                Objects.equals(this.cityName, entity.cityName) &&
+                Objects.equals(this.addresses, entity.addresses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(zipCode, city);
+        return Objects.hash(zipCode, cityName);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "id = " + zipCode + ", " +
-                "city = " + city + ")";
+                "city = " + cityName + ")";
     }
+    public static List<CityDTO> toList(List<City> citys) {
+        return citys.stream().map(CityDTO::new).collect(Collectors.toList());
+    }
+
 }

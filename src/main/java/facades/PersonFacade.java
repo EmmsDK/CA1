@@ -67,12 +67,17 @@ public class PersonFacade implements IDataFacade<Person> {
         return person;
     }
 
+    @Override
+    public Person getByString(String fill) throws errorhandling.EntityNotFoundException {
+        return null;
+    }
 
-    public Person getById(int id) throws EntityNotFoundException {
+    @Override
+    public Person getById(int fill) throws errorhandling.EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, id);
+        Person p = em.find(Person.class, fill);
         if (p == null)
-            throw new EntityNotFoundException("The Person entity with ID: " + id + " Was not found");
+            throw new EntityNotFoundException("The Person entity with ID: " + fill + " Was not found");
         return p;
     }
 
