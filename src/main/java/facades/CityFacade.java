@@ -25,7 +25,7 @@ public class CityFacade implements IDataFacade<City> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<City> getCityInfoFacade(EntityManagerFactory _emf) {
+    public static IDataFacade<City> getCityFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new CityFacade();

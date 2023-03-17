@@ -31,6 +31,7 @@ class PersonFacadeTest {
         address.addPerson(person);
         try {
             em.getTransaction().begin();
+            em.persist(c);
             em.merge(person);
             em.getTransaction().commit();
         } finally {

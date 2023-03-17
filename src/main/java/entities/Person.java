@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "person", indexes = {
         @Index(name = "email_UNIQUE", columnList = "email", unique = true),
-        @Index(name = "fk_person_address1_idx", columnList = "address_street")
+        @Index(name = "fk_person_address1_idx", columnList = "address_id")
 })
 public class Person {
     @Id
@@ -25,7 +25,7 @@ public class Person {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", nullable = false, referencedColumnName = "street")
+    @JoinColumn(name = "address_id", nullable = false, referencedColumnName = "id")
     private Address address;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)

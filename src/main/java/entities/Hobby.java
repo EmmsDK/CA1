@@ -23,7 +23,7 @@ public class Hobby {
     private String type;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "person-hobby",
+    @JoinTable(name = "person_hobby",
             joinColumns = @JoinColumn(name = "hobby_name", referencedColumnName = "name"),
             inverseJoinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"))
     private List<Person> people = new ArrayList<>();

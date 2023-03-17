@@ -20,7 +20,7 @@ public class CityFacadeTest {
     @BeforeEach
     public void setUp() {
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        facade = (CityFacade) CityFacade.getCityInfoFacade(emf);
+        facade = (CityFacade) CityFacade.getCityFacade(emf);
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -38,8 +38,8 @@ public class CityFacadeTest {
             entityManager.getTransaction().begin();
             entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS=0;").executeUpdate();
             entityManager.createNativeQuery("TRUNCATE address;").executeUpdate();
-            entityManager.createNativeQuery("DELETE c FROM CityInfo c WHERE c.zipCode = 1234;").executeUpdate();
-            entityManager.createNativeQuery("DELETE c FROM CityInfo c WHERE c.zipCode = 1235;").executeUpdate();
+            entityManager.createNativeQuery("DELETE c FROM City c WHERE c.zipCode = 1234;").executeUpdate();
+            entityManager.createNativeQuery("DELETE c FROM City c WHERE c.zipCode = 1235;").executeUpdate();
             entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS=1;").executeUpdate();
             entityManager.getTransaction().commit();
         } finally {
@@ -48,15 +48,15 @@ public class CityFacadeTest {
     }
 
     @Test
-    void getCityInfoFacade() {
+    void getCityFacade() {
         assertNotNull(facade);
     }
 
     @Test
     void create() {
-        City ci = facade.create(new City(1235, "TestCitay"));
-        System.out.println(ci.getCityName());
-        assertEquals("TestCitay", ci.getCityName());
+        City c = facade.create(new City(1235, "TestCitay"));
+        System.out.println(c.getCityName());
+        assertEquals("TestCitay", c.getCityName());
     }
 
     @Test

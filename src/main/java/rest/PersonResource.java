@@ -1,4 +1,5 @@
 package rest;
+
 /*
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,12 +7,20 @@ import dtos.ParentDTO;
 import errorhandling.EntityNotFoundException;
 import datafacades.IDataFacade;
 import businessfacades.ParentDTOFacade;
-
+*/
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 @Path("person")
 public class PersonResource {
+    @GET
+    @Path("test")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String demo() {
+        return "{\"msg\":\"Hello World\"}";
+    }
+}
+    /*
 
     //Todo Remove or change relevant parts before ACTUAL use
 
